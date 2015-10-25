@@ -5,6 +5,7 @@ var IMU = {
   alpha: NaN,
   beta: NaN,
   gamma: NaN,
+  acceleration: {x: NaN, y:NaN, z:NaN},
   accelerationIncludingGravity: {x: NaN, y:NaN, z:NaN},
   interval: NaN,
   rotationRate: NaN,
@@ -27,9 +28,12 @@ function render() {
   s += "alpha: "+IMU.alpha+"<br />";
   s += "beta: "+IMU.beta+"<br />";
   s += "gamma: "+IMU.gamma+"<br />";
-  s += "acceleration.x: "+IMU.accelerationIncludingGravity.x+"<br />";
-  s += "acceleration.y: "+IMU.accelerationIncludingGravity.y+"<br />";
-  s += "acceleration.z: "+IMU.accelerationIncludingGravity.z+"<br />";
+  s += "acceleration.x: "+IMU.acceleration.x+"<br />";
+  s += "acceleration.y: "+IMU.acceleration.y+"<br />";
+  s += "acceleration.z: "+IMU.acceleration.z+"<br />";
+  s += "accelerationRaw.x: "+IMU.accelerationIncludingGravity.x+"<br />";
+  s += "accelerationRaw.y: "+IMU.accelerationIncludingGravity.y+"<br />";
+  s += "accelerationRaw.z: "+IMU.accelerationIncludingGravity.z+"<br />";
   s += "abs_accel: "+IMU.abs_accel+"<br />";
   s += "interval: "+IMU.interval+"<br />";
   s += "rotationRate.alpha: "+IMU.rotationRate.alpha+"<br />";
@@ -54,6 +58,7 @@ function handleOrientation(event) {
 }
 
 function handleMotion(event) {
+  IMU.acceleration = event.acceleration;
   IMU.accelerationIncludingGravity = event.accelerationIncludingGravity;
   IMU.interval = event.interval;
   IMU.rotationRate = event.rotationRate;
