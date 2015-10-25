@@ -11,7 +11,8 @@ var IMU = {
   rotationRate: NaN,
   motion_event: null,
   orientation_event: null,
-  abs_accel: NaN
+  abs_accel: NaN,
+  gps: {watchID: null, position: {}, error: false}
 }
 
 function calc() {
@@ -39,6 +40,10 @@ function render() {
   s += "rotationRate.alpha: "+IMU.rotationRate.alpha+"<br />";
   s += "rotationRate.beta: "+IMU.rotationRate.beta+"<br />";
   s += "rotationRate.gamma: "+IMU.rotationRate.gamma+"<br />";
+  s += "gps.position.longitude (WE): "+IMU.gps.position.longitude+"<br />";
+  s += "gps.position.latitude (NS): "+IMU.gps.position.latitude+"<br />";
+  s += "gps.position.altitude (m): "+IMU.gps.position.altitude+"<br />";
+  s += "gps.error: "+IMU.gps.error+"<br />";
 
   elem.innerHTML = s;
 }
@@ -46,6 +51,7 @@ function render() {
 function prepareListeners() {
 	window.addEventListener("deviceorientation", handleOrientation, true);
 	window.addEventListener('devicemotion',  handleMotion, true);
+	IMU.gps.watchID = navigator.geolocation.watchPosition(handleGPSsuccess);
 }
 
 function handleOrientation(event) {
@@ -65,6 +71,19 @@ function handleMotion(event) {
 
   calc();
 
+  render();
+}
+
+function handleGPSsuccess(position) {
+  IMU.gps.error = false;
+  IMU.gps.position.latitude  = position.coords.latitude;
+  IMU.gps.position.longitude = position.coords.longitude;
+  IMU.gps.position.altitude = position.coords.altitude;
+  render();
+}
+
+function handleGPSerror() {
+  IMU.gps.error = true;
   render();
 }
 
