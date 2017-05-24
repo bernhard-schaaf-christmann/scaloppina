@@ -1,0 +1,11 @@
+Raetsel-Ideen:
+* Frage/Password in den "Tippfehlern"? (Doppelte Wörter, Rekursiv)
+* Dialogika-Kreuzworträtsel
+* Wie viele Dreiecke/Vierecke sind in folgender Zeichnung?
+* Rebus
+* Mastermind (https://puzzling.stackexchange.com/questions/46871/crack-the-lock-code)
+* (zu schwer?: https://puzzling.stackexchange.com/questions/51348/math-logic-triangle)
+
+Orte:
+* 4-stellige Zahlenkombo am "bunten Haus kurz vor dem Markt.
+* Ende: Wie ist die bedeutungslose Zahl?
