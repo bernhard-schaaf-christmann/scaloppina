@@ -41,20 +41,17 @@ Transcoder = function(seed) {
 	}
 	this.start_state = parseInt(seed);
 	this.LFSR = new Linear_Feedback_Shift_Register(this.start_state);
+	this.period = 0;
+	this.lfsr = this.LFSR.get();
 }
 
-Transcoder.prototype.check_lfsr_period = function() { // linear feedback shift register
-	var LFSR = new Linear_Feedback_Shift_Register(this.start_state);
-
-    var period = 0;
-	var lfsr = LFSR.get();
-
-    do {
-		lfsr = LFSR.step();
-        ++period;
-    } while (lfsr != this.start_state);
-
-    return period;
+Transcoder.prototype.step_check_lfsr_period = function() { // linear feedback shift register
+	var lfsr = this.LFSR.step();
+	++this.period;
+	if (lfsr == this.start_state) {
+		return {"finished": true, "period": this.period, "lfsr": lfsr};
+	}
+	return {"finished": false, "period": this.period, "lfsr": lfsr};
 }
 /*****************************************************************************/
 
@@ -62,12 +59,31 @@ function main() {
 	console.log("HI");
 	var text_block = document.querySelector('#text-block');
 	console.log(text_block);
-	var transcoder = new Transcoder()
-	if (text_block) {
-		text_block.textContent = "Starte Berechnung…";
-		var period = transcoder.check_lfsr_period();
-		text_block.textContent = "Linear Feedback Shift Register-Periode = "+period;
+
+	var show = function(message) {
+		if (text_block) {
+			text_block.innerHTML = message;
+		}
 	}
+	show("Starte Berechnung…");
+
+	var transcoder = new Transcoder();
+	var tick = function() {
+		var boost = 256;
+		var result = transcoder.step_check_lfsr_period();
+		while (boost > 0 && !result.finished) {
+			result = transcoder.step_check_lfsr_period();
+			--boost;
+		}
+		if (!result.finished) {
+			show("Berechnung läuft…<br>Linear Feedback Shift Register-Wert = 0x"+("000" + result.lfsr.toString(16)).slice(-4)+"<br>Schritte: "+result.period);
+			setTimeout(tick, 1);
+		} else {
+			show("Fertig!<br>Linear Feedback Shift Register-Wert = 0x"+("000" + result.lfsr.toString(16)).slice(-4)+"<br>Periode: "+result.period);
+		}
+	}
+
+	tick();
 }
 
 window.onload = main;
