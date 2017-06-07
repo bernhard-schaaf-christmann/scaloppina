@@ -31,6 +31,14 @@ Linear_Feedback_Shift_Register.prototype.step = function(number) {
 Linear_Feedback_Shift_Register.prototype.get = function() {
 	return this.lfsr;
 };
+
+Linear_Feedback_Shift_Register.prototype.set = function(seed) {
+	if (!seed) {
+		seed = 1;
+	}
+	this.lfsr = parseInt(seed);
+};
+
 /*****************************************************************************/
 
 
@@ -52,6 +60,19 @@ Transcoder.prototype.step_check_lfsr_period = function() { // linear feedback sh
 		return {"finished": true, "period": this.period, "lfsr": lfsr};
 	}
 	return {"finished": false, "period": this.period, "lfsr": lfsr};
+}
+
+Transcoder.prototype.reset = function() {
+	this.LFSR.set(this.start_state);
+}
+
+Transcoder.prototype.encode = function(message) {
+	var str = message.toString();
+	var result = Uint8Array.from(str);
+	for (var i = 0, len = result.length; i < len; i++) {
+//		result[i] = i;//32+str[i];
+	}
+	return result.toString();
 }
 /*****************************************************************************/
 
@@ -83,6 +104,7 @@ function main() {
 		}
 	}
 
+	console.log(transcoder.encode("Hallo Leute!"));
 	tick();
 }
 
