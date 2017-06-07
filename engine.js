@@ -35,11 +35,16 @@ Linear_Feedback_Shift_Register.prototype.get = function() {
 
 
 /*****************************************************************************/
-//LFSR_Checker = function(
+Transcoder = function(seed) {
+	if (!seed) {
+		seed = 0xACE1; /* Any nonzero start state will work. */
+	}
+	this.start_state = parseInt(seed);
+	this.LFSR = new Linear_Feedback_Shift_Register(this.start_state);
+}
 
-function check_lfsr_period() { // linear feedback shift register
-	var start_state = 0xACE1;  /* Any nonzero start state will work. */
-	var LFSR = new Linear_Feedback_Shift_Register(start_state);
+Transcoder.prototype.check_lfsr_period = function() { // linear feedback shift register
+	var LFSR = new Linear_Feedback_Shift_Register(this.start_state);
 
     var period = 0;
 	var lfsr = LFSR.get();
@@ -47,18 +52,20 @@ function check_lfsr_period() { // linear feedback shift register
     do {
 		lfsr = LFSR.step();
         ++period;
-    } while (lfsr != start_state);
+    } while (lfsr != this.start_state);
 
     return period;
 }
+/*****************************************************************************/
 
 function main() {
 	console.log("HI");
 	var text_block = document.querySelector('#text-block');
 	console.log(text_block);
+	var transcoder = new Transcoder()
 	if (text_block) {
 		text_block.textContent = "Starte Berechnung…";
-		var period = check_lfsr_period();
+		var period = transcoder.check_lfsr_period();
 		text_block.textContent = "Linear Feedback Shift Register-Periode = "+period;
 	}
 }
