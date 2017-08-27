@@ -77,12 +77,21 @@ Transcoder.prototype.reset = function() {
 
 /// encode some message, including conversion to octet stream
 Transcoder.prototype.encode = function(message) {
-	var str = message.toString();
-	var result = Uint8Array.from(str);
-	for (var i = 0, len = result.length; i < len; i++) {
-//		result[i] = i;//32+str[i]; // TODO doesn't work as expected??
+//  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+//  var bufView = new Uint16Array(buf);
+//  for (var i=0, strLen=str.length; i<strLen; i++) {
+//    bufView[i] = str.charCodeAt(i);
+//  }
+//  return buf;
+	var buf = new ArrayBuffer(strLen*2); // TODO wchar is wrong assumption with variable multibyte chars
+	var str = message.toString();  // TODO
+	console.log("AA: ",str);  // TODO
+	var strLen = str.length;  // TODO
+	var result = Uint8Array.from(str); // TODO
+	for (var i = 0, len = result.length; i < len; i++) { // TODO
+		result[i] = str.charCodeAt(i); // TODO doesn't work as expected??
 	}
-	return result.toString();
+	return result; //result.toString();
 }
 /*****************************************************************************/
 
@@ -116,7 +125,7 @@ function main() {
 		}
 	}
 
-	console.log(transcoder.encode("Hallo Leute!"));
+	console.log(transcoder.encode("🏁 Ä Ö Ü ä ö ü ß € µ – · … Hallo Leute!")); // many special multibyte characters.
 	tick();
 }
 
