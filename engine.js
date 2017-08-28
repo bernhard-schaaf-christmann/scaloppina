@@ -1,9 +1,43 @@
+'use strict';
+
+
+/* code from
+* https://coolaj86.com/articles/unicode-string-to-a-utf-8-typed-array-buffer-in-javascript/
+*/
+// string to uint array
+function unicodeStringToTypedArray(s) {
+    var escstr = encodeURIComponent(s);
+    var binstr = escstr.replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode('0x' + p1);
+    });
+    var ua = new Uint8Array(binstr.length);
+    Array.prototype.forEach.call(binstr, function (ch, i) {
+        ua[i] = ch.charCodeAt(0);
+    });
+    return ua;
+}
+
+// uint array to string
+function typedArrayToUnicodeString(ua) {
+    var binstr = Array.prototype.map.call(ua, function (ch) {
+        return String.fromCharCode(ch);
+    }).join('');
+    var escstr = binstr.replace(/(.)/g, function (m, p) {
+        var code = p.charCodeAt(p).toString(16).toUpperCase();
+        if (code.length < 2) {
+            code = '0' + code;
+        }
+        return '%' + code;
+    });
+    return decodeURIComponent(escstr);
+}
+
 /******************************************************************************
 * Class encapsulating a LFSR in Fibonacci form
 ******************************************************************************/
 
 /// Constructor: seed is starting value
-Linear_Feedback_Shift_Register = function(seed) {
+var Linear_Feedback_Shift_Register = function(seed) {
 	if (!seed) {
 		seed = 1;
 	}
@@ -50,7 +84,7 @@ Linear_Feedback_Shift_Register.prototype.set = function(seed) {
 * Methods for encoding and decoding arbitrary octet streams.
 ******************************************************************************/
 /// constructor: LFSR seed as input
-Transcoder = function(seed) {
+var Transcoder = function(seed) {
 	if (!seed) {
 		seed = 0xACE1; /* Any nonzero start state will work. */
 	}
@@ -95,9 +129,34 @@ Transcoder.prototype.encode = function(message) {
 }
 /*****************************************************************************/
 
+/*****************************************************************************/
+function tests_ok() {
+	var result = true;
+	result |= test_utf8_string_transcoder();
+	if (!result) return false;
+}
+
+function test_utf8_string_transcoder() {
+	var unicode = "I ½ ♥ 💩";
+	var buf = unicodeStringToTypedArray(unicode);
+	var arr = Array.prototype.slice.call(buf);
+	// [73, 32, 194, 189, 32, 226, 153, 165, 32, 240, 159, 146, 169];
+	var arr_ = [73, 32, 194, 189, 32, 226, 153, 165, 32, 240, 159, 146, 169];
+	var data_ = new Uint8Array(arr_);
+	var unicode_ = typedArrayToUnicodeString(data_); // "I ½ ♥ 💩";
+	if (unicode != unicode_) {
+		return false;
+	}
+	return true
+}
+/*****************************************************************************/
+
 /// our entry point
 function main() {
 	console.log("HI");
+	if (!tests_ok()) {
+		console.log("Some Tests failed. Stopping.");
+	}
 	var text_block = document.querySelector('#text-block');
 	console.log(text_block);
 
