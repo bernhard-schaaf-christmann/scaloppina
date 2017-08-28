@@ -130,10 +130,14 @@ Transcoder.prototype.encode = function(message) {
 /*****************************************************************************/
 
 /*****************************************************************************/
-function tests_ok() {
-	var result = true;
-	result |= test_utf8_string_transcoder();
-	if (!result) return false;
+function tests_ok(show) {
+	show("Starting internal selftest…");
+	return test_dummy(show) || test_utf8_string_transcoder(show);
+}
+
+function test_dummy(show) {
+	show("Running test_dummy.");
+	return true;
 }
 
 function test_utf8_string_transcoder() {
@@ -144,19 +148,23 @@ function test_utf8_string_transcoder() {
 	var arr_ = [73, 32, 194, 189, 32, 226, 153, 165, 32, 240, 159, 146, 169];
 	var data_ = new Uint8Array(arr_);
 	var unicode_ = typedArrayToUnicodeString(data_); // "I ½ ♥ 💩";
-	if (unicode != unicode_) {
+	show(unicode, unicode_);
+	if (unicode.length != unicode_.length) {
+		show("String lengths don't match.");
 		return false;
 	}
+	if (!unicode.endsWith(unicode_)) {
+		show("String endings don't match.");
+		return false;
+	}
+	show("At this place strings must match.");
 	return true
 }
 /*****************************************************************************/
 
 /// our entry point
 function main() {
-	console.log("HI");
-	if (!tests_ok()) {
-		console.log("Some Tests failed. Stopping.");
-	}
+	console.log("HI and WELCOME");
 	var text_block = document.querySelector('#text-block');
 	console.log(text_block);
 
@@ -164,6 +172,10 @@ function main() {
 		if (text_block) {
 			text_block.innerHTML = message;
 		}
+	}
+	if (!tests_ok(function(msg) {show(msg); console.log(msg)})) {
+		show("Some Tests failed. Stopping.");
+		return;
 	}
 	show("Starte Berechnung…");
 
