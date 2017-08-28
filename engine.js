@@ -1,29 +1,32 @@
 'use strict';
 
+/******************************************************************************
+* Helper functions
+******************************************************************************/
 
-/* code from
+/* code adapted from
 * https://coolaj86.com/articles/unicode-string-to-a-utf-8-typed-array-buffer-in-javascript/
 */
-// string to uint array
+/// string to uint array
 function unicodeStringToTypedArray(s) {
     var escstr = encodeURIComponent(s);
     var binstr = escstr.replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode('0x' + p1);
+        return String.fromCodePoint('0x' + p1);
     });
     var ua = new Uint8Array(binstr.length);
     Array.prototype.forEach.call(binstr, function (ch, i) {
-        ua[i] = ch.charCodeAt(0);
+        ua[i] = ch.codePointAt(0);
     });
     return ua;
 }
 
-// uint array to string
+/// uint array to string
 function typedArrayToUnicodeString(ua) {
     var binstr = Array.prototype.map.call(ua, function (ch) {
-        return String.fromCharCode(ch);
+        return String.fromCodePoint(ch);
     }).join('');
     var escstr = binstr.replace(/(.)/g, function (m, p) {
-        var code = p.charCodeAt(p).toString(16).toUpperCase();
+        var code = p.codePointAt(p).toString(16).toUpperCase();
         if (code.length < 2) {
             code = '0' + code;
         }
@@ -109,38 +112,41 @@ Transcoder.prototype.reset = function() {
 	this.LFSR.set(this.start_state);
 }
 
+Transcoder.prototype.encode_single_octet = function(byte) {
+	return byte+1; // TODO, add LFSR and step
+}
+
 /// encode some message, including conversion to octet stream
-Transcoder.prototype.encode = function(message) {
-//  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-//  var bufView = new Uint16Array(buf);
-//  for (var i=0, strLen=str.length; i<strLen; i++) {
-//    bufView[i] = str.charCodeAt(i);
-//  }
-//  return buf;
-	var buf = new ArrayBuffer(strLen*2); // TODO wchar is wrong assumption with variable multibyte chars
-	var str = message.toString();  // TODO
-	console.log("AA: ",str);  // TODO
-	var strLen = str.length;  // TODO
-	var result = Uint8Array.from(str); // TODO
-	for (var i = 0, len = result.length; i < len; i++) { // TODO
-		result[i] = str.charCodeAt(i); // TODO doesn't work as expected??
-	}
-	return result; //result.toString();
+Transcoder.prototype.encode = function(unicode) { // TODO probably initialize LFSR in some state?
+	var data = unicodeStringToTypedArray(unicode);
+
+	var self = this;
+	Array.prototype.forEach.call(data, function (octet, i) {
+        data[i] = self.encode_single_octet(octet);
+    });
+
+	return data;
 }
 /*****************************************************************************/
 
-/*****************************************************************************/
+/******************************************************************************
+* Tests
+******************************************************************************/
+/// entry point for tests
 function tests_ok(show) {
 	show("Starting internal selftest…");
-	return test_dummy(show) || test_utf8_string_transcoder(show);
+	return test_dummy(show) && test_utf8_string_transcoder(show); // add further test with logical and for short circuit evaluation
 }
 
+/// root of tests
 function test_dummy(show) {
 	show("Running test_dummy.");
 	return true;
 }
 
-function test_utf8_string_transcoder() {
+/// testing utf8 string conversion
+function test_utf8_string_transcoder(show) {
+	show("Running test_utf8_string_transcoder.");
 	var unicode = "I ½ ♥ 💩";
 	var buf = unicodeStringToTypedArray(unicode);
 	var arr = Array.prototype.slice.call(buf);
@@ -174,7 +180,7 @@ function main() {
 		}
 	}
 	if (!tests_ok(function(msg) {show(msg); console.log(msg)})) {
-		show("Some Tests failed. Stopping.");
+		show("Some Tests failed. Stopping. We think this platform is not appropriate to run this. Sorry.");
 		return;
 	}
 	show("Starte Berechnung…");
