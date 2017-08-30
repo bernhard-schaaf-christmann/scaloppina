@@ -64,7 +64,7 @@ function main() {
 	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(local_data)); };
 	var get_local_data = function() { return JSON.parse(localStorage.getItem("local_data")) };
 	put_local_data(local_data);
-	
+
 	var tick = function() {
 //		show("Fertig!");
 		var result = get_local_data(); // TODO just testing
