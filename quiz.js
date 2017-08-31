@@ -50,7 +50,8 @@ function main() {
 			text_block.innerHTML = message;
 		}
 	}
-	var show_and_log = function(msg) {show(msg); console.log(msg)};
+	var show_and_log = function(msg) {show(msg); console.log(msg); };
+	var logn = function(msg) { console.log(msg); };
 	if (!tests_ok(show_and_log)) {
 		show("Some Tests failed. Stopping. We think this platform is not appropriate to run this. Sorry.");
 		return;
@@ -66,34 +67,65 @@ function main() {
 	// TODO get some input from the user for the username
 	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(local_data)); };
 	var get_local_data = function() { return JSON.parse(localStorage.getItem("local_data")) };
-	put_local_data(local_data);
+	put_local_data(local_data); // TODO check if we have privious data and ask(?) if we want to keep it
 
-	var tick = function() {
-//		show("Fertig!");
-		var result = get_local_data(); // TODO just testing
-		show("username: " + result.username + "<br>stage: " + result.stage); // TODO just testing
-		setTimeout(tick, 1);
-	}
+//	var tick = function() {
+////		show("Fertig!");
+//		var result = get_local_data(); // TODO just testing
+//		show("username: " + result.username + "<br>stage: " + result.stage); // TODO just testing
+//		setTimeout(tick, 1);
+//	}
 
 	var on_commit_click = function() {
-		show_and_log("commit");
+		logn("commit");
 	}
 
 	var on_next_click = function() {
-		show_and_log("next");
+		logn("next");
+		var stage = local_data.stage;
+		var next = quiz_data[stage].next;
+		if (0 == next.length) {
+			return;
+		}
+		if ("finish" == next) { // TODO just testing
+			show_image("Zeichnung2.svg",100,100,"z2");
+		}
+		local_data.stage = next;
+		put_local_data(local_data);
+		redraw();
 	}
 
 	var on_restart_click = function() {
-		show_and_log("restart");
+		logn("restart");
+		local_data.stage = "start";
+		put_local_data(local_data);
+		redraw();
 	}
 
 	commit_button.addEventListener('click', on_commit_click);
 	next_button.addEventListener('click', on_next_click);
 	restart_button.addEventListener('click', on_restart_click);
-	tick();
-	var stage = local_data.stage;
-	var next = quiz_data[stage].next;
-	show_and_log(JSON.stringify(quiz_data[stage]) + " " + next); // TODO just testing
+//	tick();
+
+	var redraw = function() {
+		var stage = local_data.stage;
+		var next = quiz_data[stage].next;
+		show_and_log(quiz_data[stage].text);
+		logn(next);
+	}
+	redraw()
+}
+
+// fom https://stackoverflow.com/q/37952083
+function show_image(src, width, height, alt) {
+  var img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  img.height = height;
+  img.alt = alt;
+
+  // This next line will just add it to the <body> tag
+  document.body.appendChild(img);
 }
 
 window.onload = main;
