@@ -43,6 +43,7 @@ function main() {
 	var commit_button = document.querySelector('#commit-button');
 	var next_button = document.querySelector('#next-button');
 	var restart_button = document.querySelector('#restart-button');
+	var image_part = document.querySelector('#image-part');
 	console.log(text_block);
 
 	var show = function(message) {
@@ -89,6 +90,7 @@ function main() {
 		}
 		if ("finish" == next) { // TODO just testing
 			show_image("Zeichnung2.svg",100,100,"z2");
+			image_part.src = "Zeichnung2.svg";
 		}
 		local_data.stage = next;
 		put_local_data(local_data);
