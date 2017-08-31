@@ -40,6 +40,9 @@ function test_local_storage(show) {
 function main() {
 	console.log("HI and WELCOME");
 	var text_block = document.querySelector('#text-block');
+	var commit_button = document.querySelector('#commit-button');
+	var next_button = document.querySelector('#next-button');
+	var restart_button = document.querySelector('#restart-button');
 	console.log(text_block);
 
 	var show = function(message) {
@@ -72,6 +75,21 @@ function main() {
 		setTimeout(tick, 1);
 	}
 
+	var on_commit_click = function() {
+		show_and_log("commit");
+	}
+
+	var on_next_click = function() {
+		show_and_log("next");
+	}
+
+	var on_restart_click = function() {
+		show_and_log("restart");
+	}
+
+	commit_button.addEventListener('click', on_commit_click);
+	next_button.addEventListener('click', on_next_click);
+	restart_button.addEventListener('click', on_restart_click);
 	tick();
 	var stage = local_data.stage;
 	var next = quiz_data[stage].next;
