@@ -79,6 +79,14 @@ function main() {
 
 	var on_commit_click = function() {
 		logn("commit");
+		var image_data_url = "data:image/png;base64,\
+iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGP\
+C/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IA\
+AAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1J\
+REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq\
+ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0\
+vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-URL
+		show_image(image_data_url, 50, 50, "direkt Bilddaten"); // TODO just testing direkt data drawing
 	}
 
 	var on_next_click = function() {
