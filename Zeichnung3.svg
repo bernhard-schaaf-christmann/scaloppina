@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="Zeichnung2.svg">
+   sodipodi:docname="Zeichnung3.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="187.0592"
+     inkscape:cx="215.55576"
      inkscape:cy="-125.89571"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -58,7 +58,7 @@
      id="layer1"
      transform="translate(-147.33261,-388.24705)">
     <rect
-       style="fill:#e03c5f;fill-opacity:1;stroke:#900000;stroke-width:0.80164742;stroke-opacity:1"
+       style="fill:#16d4ad;fill-opacity:1;stroke:#900000;stroke-width:0.80164742;stroke-opacity:1"
        id="rect4140"
        width="738.87732"
        height="144.90038"
@@ -74,6 +74,6 @@
          sodipodi:role="line"
          id="tspan4138"
          x="143.40683"
-         y="418.63766">Bildhinweise für Rätsel 2.</tspan></text>
+         y="418.63766">Bildhinweise für Rätsel 3.</tspan></text>
   </g>
 </svg>

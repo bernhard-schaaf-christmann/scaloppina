@@ -88,10 +88,6 @@ function main() {
 		if (0 == next.length) {
 			return;
 		}
-		if ("finish" == next) { // TODO just testing
-			show_image("Zeichnung2.svg",100,100,"z2");
-			image_part.src = "Zeichnung2.svg";
-		}
 		local_data.stage = next;
 		put_local_data(local_data);
 		redraw();
@@ -112,7 +108,9 @@ function main() {
 	var redraw = function() {
 		var stage = local_data.stage;
 		var next = quiz_data[stage].next;
+		var image_file_name = quiz_data[stage].image;
 		show_and_log(quiz_data[stage].text);
+		image_part.src = image_file_name;
 		logn(next);
 	}
 	redraw()
