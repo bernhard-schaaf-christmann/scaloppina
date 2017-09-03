@@ -108,11 +108,27 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 	}
 
 	var on_submit_click = function() {
+		logn("submit");
+		var http = new XMLHttpRequest();
+		var url = "put_passwords.js";
+		var params = "lorem=ipsum&name=brs";
+		http.open("POST", url, true);
+
+		//Send the proper header information along with the request
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+		http.onreadystatechange = function() { //Call a function when the state changes.
+			if(http.readyState == 4 && http.status == 200) {
+				logn("HTTP response of submit: ", http.responseText);
+			}
+		}
+		http.send(params);
 	}
 
 	commit_button.addEventListener('click', on_commit_click);
 	next_button.addEventListener('click', on_next_click);
 	restart_button.addEventListener('click', on_restart_click);
+	submit_button.addEventListener('click', on_submit_click);
 
 	var redraw = function() {
 		var stage = local_data.stage;
