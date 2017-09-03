@@ -5,7 +5,15 @@ var http = require("http"),
     fs = require("fs"),
     port = process.argv[2] || 8888;
 
+var logn = {
+	info : function() {
+		console.log.apply(this, arguments); // varargs
+	}
+}
+
 http.createServer(function(request, response) {
+
+  logn.info(request.method);
 
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);

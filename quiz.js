@@ -43,16 +43,21 @@ function main() {
 	var commit_button = document.querySelector('#commit-button');
 	var next_button = document.querySelector('#next-button');
 	var restart_button = document.querySelector('#restart-button');
+	var submit_button = document.querySelector('#submit-button');
 	var image_part = document.querySelector('#image-part');
 	console.log(text_block);
 
-	var show = function(message) {
+	var show_string = function(message) {
 		if (text_block) {
 			text_block.innerHTML = message;
 		}
 	}
-	var show_and_log = function(msg) {show(msg); console.log(msg); };
-	var logn = function(msg) { console.log(msg); };
+	var show = function() {
+		var result = Array.prototype.join.call(arguments);
+		show_string(result);
+	}
+	var logn = function() { console.log.apply(this, arguments); };
+	var show_and_log = function(msg) {show.apply(this, arguments); logn.apply(this, arguments); };
 	if (!tests_ok(show_and_log)) {
 		show("Some Tests failed. Stopping. We think this platform is not appropriate to run this. Sorry.");
 		return;
@@ -65,17 +70,11 @@ function main() {
 		"stage" : "start"
 	}
 	show_and_log(local_data);
+	// TODO pre check if already local data exists on this browser instance and merge data
 	// TODO get some input from the user for the username
 	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(local_data)); };
 	var get_local_data = function() { return JSON.parse(localStorage.getItem("local_data")) };
 	put_local_data(local_data); // TODO check if we have privious data and ask(?) if we want to keep it
-
-//	var tick = function() {
-////		show("Fertig!");
-//		var result = get_local_data(); // TODO just testing
-//		show("username: " + result.username + "<br>stage: " + result.stage); // TODO just testing
-//		setTimeout(tick, 1);
-//	}
 
 	var on_commit_click = function() {
 		logn("commit");
@@ -108,10 +107,12 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 		redraw();
 	}
 
+	var on_submit_click = function() {
+	}
+
 	commit_button.addEventListener('click', on_commit_click);
 	next_button.addEventListener('click', on_next_click);
 	restart_button.addEventListener('click', on_restart_click);
-//	tick();
 
 	var redraw = function() {
 		var stage = local_data.stage;
