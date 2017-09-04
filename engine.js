@@ -113,11 +113,12 @@ Transcoder.prototype.reset = function() {
 }
 
 Transcoder.prototype.encode_single_octet = function(byte) {
-	return byte+1; // TODO, add LFSR and step
+	var state = this.LFSR.step(byte); // run through the states
+	return state & 0xFF;
 }
 
 /// encode some message, including conversion to octet stream
-Transcoder.prototype.encode = function(unicode) { // TODO probably initialize LFSR in some state?
+Transcoder.prototype.encode_to_array_further = function(unicode) { // TODO probably initialize LFSR in some state?
 	var data = unicodeStringToTypedArray(unicode);
 
 	var self = this;
@@ -126,6 +127,25 @@ Transcoder.prototype.encode = function(unicode) { // TODO probably initialize LF
     });
 
 	return data;
+}
+
+Transcoder.prototype.encode_to_array = function(unicode) {
+	this.reset();
+	return this.encode_to_array_further(unicode);
+}
+
+Transcoder.prototype.to_base64 = function(uint8array) {
+	var binary = '';
+	var bytes = new Uint8Array( uint8array );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+}
+
+Transcoder.prototype.encode = function(unicode) {
+	return this.to_base64(this.encode_to_array(unicode));
 }
 /*****************************************************************************/
 
@@ -202,7 +222,14 @@ function main() {
 		}
 	}
 
-	console.log(transcoder.encode("🏁 Ä Ö Ü ä ö ü ß € µ – · … Hallo Leute!")); // many special multibyte characters.
+	var some_string = "🏁 Ä Ö Ü ä ö ü ß € µ – · … Ｈａｌｌｏ Ｌｅｕｔｅ!";
+	var vorher = unicodeStringToTypedArray(some_string);
+	console.log(some_string);
+	console.log(vorher);
+	console.log(transcoder.encode_to_array(some_string)); // many special multibyte characters.
+	var result = transcoder.encode_to_array(some_string);
+	console.log(transcoder.to_base64(result));
+	console.log(transcoder.encode("5,3")); // many special multibyte characters.
 	tick();
 }
 
