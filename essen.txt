@@ -1,0 +1,74 @@
+Do, 31.08.2017	DIaLOGIKa   (101 Bewertungen) 	Salatbüffet	3,60 €
+Mo, 04.09.2017	Junge Küche (87 Bewertungen) 	• Rindfleischsuppe mit Nudeln • Früchtespieße • Paniertes Schnitzel (Schweinerücken) Rahmsauce, Spätzle, Salatbeilage • hausgebackener Kuchen • Flûtes	5,30 €
+Di, 05.09.2017	Kochwelt    (127 Bewertungen) 	Bratenfleisch in Sauce, Hoorische, Blattsalat, Obstsalat
+Mi, 06.09.2017	Kochwelt    (127 Bewertungen) 	Spaghetti Bolognese,Reibekäse, Rohkostsalate, Pudding
+Do, 07.09.2017	DIaLOGIKa   (101 Bewertungen) 	Salatbüffet	3,60 €
+Mo, 11.09.2017	Junge Küche (87 Bewertungen) 	Platzhalter	5,30 €
+Di, 12.09.2017	Dinner for One (89 Bewertungen) Platzhalter	4,95 €
+
+Datum 			Lieferant	Name
+Preis	Mitbesteller	Stornieren
+Fr, 18.08.2017 	Postillion	90 :  Kebap 																				3,50 €
+Mo, 21.08.2017 	Junge Küche	Gulaschsuppe • Salatbeilage • Sauerbraten (Rind) Knödel, Rotkohl • Rotweinkuchen • Flûtes 	5,30 €
+Di, 22.08.2017 	Kochwelt	Hühnerfrikasseein weißer Sauce, Reis, Blattsalat, Pudding 		   				   			4,60 €
+Fr, 11.08.2017 	Ruby Asian Food & Sushi Spezialitäten	12 :  Bami Goreng 												7,50 €
+Do, 10.08.2017 	DIaLOGIKa	Salatbüffet 				   	  	   														3,60 €
+Di, 29.08.2017 	Dinner for One - vegetarisch	Gnocchi mit Napolitana-Sauce, Salat der Saison, Kuchen-Variationen 		4,95 €
+Mi, 30.08.2017 	Dinner for One	Spießbraten in pikanter Sauce Kartoffelklöße, Gemüse der Saison, Eis 					4,95 €
+Fr, 07.07.2017 	Pizzeria Italia	179 :  Tortellini Bolonga (sic) 			  		 	 		 						7,30 € 	BRS
+
+Datum: 1=A
+(Bewertungen: 1=A)
+Essen: Großbuchstaben
+Preis: 1=A
+Mitbesteller: Anfangsbuchstaben
+
+Sa, 20.05.2017 Hoffmann               Tandoori-Hähnchen : mittel-scharfes, fruchtiges indisches Curry aus Hähnchenbrustfleischstücken, Karotten, Zucchini, Lauchzwiebeln und Tandoori-Gewürzpaste, dazu Basmati-Reis  4,20 tl
+Mo, 05.06.2017 Ruby Asian Food 		  Ebi 4 Stück Inside out     			 					  										 		   			 			   	   						 	  			  3,05 eliz
+Fr, 09.06.2017 Pizzeria Italia		  Insalata Italiana																													   						 	  				  5,09 inko
+Mo, 12.06.2017 Postillion             Lasagne     																														   						 	  				  5,12 luke
+Sa, 01.07.2017 Marie Curry            Baconburger																															   						 	  			  9,03 dm
+Mi, 19.07.2017 Rubi                   Tom Yamgung Suppe																													   						 	  			      4,18 eliz
+Mi, 09.08.2017 Postillion             Chefsalat																														   						 	  				      6,08 hobu
+Di, 15.08.2017 Junge Küche            Lauchcremesuppe • Salatbeilage • Orientalische Poulardenbrust in gelber Curry-Ananassauce Reis, Gemüse • Limettenjoghurt • Flûtes     						 	  			  5,26 sms
+So, 03.09.2017 Kochwelt				  Hacksteak, Zwiebelsauce, Kartoffelpüree, Rohkostsalate, Äpfel           				  			   	 				   			   						 	  				  4,01 cws
+Fr, 08.09.2017 Dinner for One - veg	  Tortellini gefüllt mit Spinat, mit Käse-Sauce, Salat der Saison, Eis    				  			   	 				   			   						 	  				  4,05 luke
+
+Datum          Lieferant         Name                                                                                    Preis   Mitbesteller
+Sa, 20.05.2017 Hoffmann          Tandoori-Hähnchen: indisches Curry aus Hähnchenbrustfleischstücken, dazu Basmati-Reis   4,20    tl
+Mo, 05.06.2017 Ruby Asian Food   Ebi 4 Stück Inside out                                                                  3,05    eliz
+Fr, 09.06.2017 Pizzeria Italia   Insalata Italiana                                                                       5,09    inko
+Mo, 12.06.2017 Postillion        Lasagne                                                                                 5,12    luke
+Sa, 01.07.2017 Marie Curry       Baconburger                                                                             9,03    dm
+Mi, 19.07.2017 Rubi Asian Food   Tom Yamgung Suppe                                                                       4,18    eliz
+Mi, 09.08.2017 Postillion        Chefsalat                                                                               6,08    hobu
+Di, 15.08.2017 Junge Küche       Lauchcremesuppe • Orientalische Poulardenbrust, Gemüse • Limettenjoghurt • Flûtes       5,26    sms
+So, 03.09.2017 Kochwelt          Hacksteak, Zwiebelsauce, Kartoffelpüree, Rohkostsalate, Äpfel                           4,01    cws
+Fr, 08.09.2017 Dinner for One    Tortellini gefüllt mit Spinat, mit Käse-Sauce, Salat der Saison, Eis                    4,05    luke
+
+
+TTTT
+EEEE
+IIII
+LLLL
+ABCD
+stre
+ichh
+olzs
+chac
+htel
+
+         11111111112222222
+12345678901234567890123456
+abcdefghijklmnopqrstuvwxyz
+
+Spaghettibaum
+Spaghettirüsselkäfer
+Dachterrassenwohnung
+Charakterentwicklung
+Bundesligamannschaft
+Entwicklungscomputer
+Fischereiunternehmen
+Wahlkampfversprechen
+Umbuchungsprotokolle
+Streichholzschachtel
