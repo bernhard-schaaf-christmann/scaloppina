@@ -5,6 +5,8 @@ Raetsel-Ideen:
 * Rebus
 * Mastermind (https://puzzling.stackexchange.com/questions/46871/crack-the-lock-code)
 * (zu schwer?: https://puzzling.stackexchange.com/questions/51348/math-logic-triangle)
+* Sortierte Einzelwörter wiederherstellen (aabefgu -> aufgabe), Lösungswort
+  sind die Anfangs-/Endbuchstaben
 
 Orte:
 * 4-stellige Zahlenkombo am "bunten Haus kurz vor dem Markt.

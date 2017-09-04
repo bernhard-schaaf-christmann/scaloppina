@@ -1,0 +1,25 @@
+Wenn letzte Woche Bundestagswahl gewesen wäre...
+                 Veränderung zur Vorwoche
+Union 37         +18
+AFD   11         + 2
+Linke  9         + 4
+FDP    8         + 6
+Grüne  8         + 3
+SPD   23         + 9
+
+
+37 Union 19 s
+11 AFD    9 i
+9 Linke  5 e
+8 FDP    2 b
+8 Grüne  5 e
+23 SPD   14 n
+
+b = 2
+e = 5
+i = 9
+n = 14
+s = 19
+
+beeins
+sieben
