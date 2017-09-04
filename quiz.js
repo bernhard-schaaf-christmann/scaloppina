@@ -39,6 +39,7 @@ function test_local_storage(show) {
 /// our entry point
 function main() {
 	console.log("HI and WELCOME");
+	// TODO test_ok ausführen und bei Misserfolg dem Nutzer mitteilen
 	var transcoder = new Transcoder();
 	var text_block = document.querySelector('#text-block');
 	var commit_button = document.querySelector('#commit-button');
@@ -66,7 +67,7 @@ function main() {
 	}
 	show("Starte Berechnung…");
 
-	// username needed for indexing the final result
+	// TODO username needed for indexing the final result
 	var local_data = {
 		"username" : "brs",
 		"stage" : "start"
