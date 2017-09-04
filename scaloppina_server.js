@@ -47,6 +47,7 @@ http.createServer(function(request, response) {
 			response.writeHead(200);
 			response.write(file, "binary");
 			response.end();
+			logn.info("delivered: ", filename);
 		});
 	});
 }).listen(parseInt(port, 10));
