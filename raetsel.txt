@@ -1,10 +1,11 @@
 Rätsel:
   NAME           IDEE     UMSETZUNG        BILD        TEXT     JSON
-- Kürzel          x           x              x
-- Restodia        x           x              x
-- Primzahlen      x           x              -          x
+- Kürzel          x           x              x                    x
+- Restodia        x           x              x                    x
+- Primzahlen      x           x              -          x         x
+- Orthographie    x           x              x          x         x
 - Wahl            x           x
-- Labyrinth       x           /
-- Orthographie    x
+- Labyrinth       x           x              x          x         x
+
 - Mize            .
 - Mattermost      .
