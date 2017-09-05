@@ -6,7 +6,7 @@ var quiz_data = {
 		"text": "Rätsel 1",
 		"title" : "Rätsel 1", // TODO
 		"image": "dia-puzzle.png",
-		"next" : "aboutus"
+		"next" : "restodia"
 	},
 	"restodia": {
 		"password": "Streichholzschachtel",
