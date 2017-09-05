@@ -1,9 +1,10 @@
-Rätsel fertig (außer Design)
-- Restodia
-- Kürzel
-- Labyrinth (noch zu schwer)
-- Primzahlen
-- Wahl
-
-In Arbeit:
-- Orthographie
+Rätsel:
+  NAME           IDEE     UMSETZUNG        BILD        TEXT     JSON
+- Restodia        x           x              x
+- Kürzel          x           x              x
+- Labyrinth       x           /
+- Primzahlen      x           x              -          x
+- Wahl            x           x
+- Orthographie    x
+- Mize            .
+- Mattermost      .
