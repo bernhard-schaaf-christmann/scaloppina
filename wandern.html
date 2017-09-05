@@ -2,27 +2,27 @@
 <html lang=de manifest="scaloppina.appcache">
 	<head>
 		<meta charset=utf-8>
-		<title>Hunt for Scaloppina</title>
-		<script src="quiz_data.js"></script>
+		<title>Hunt for Scaloppina – Wanderlust Edition</title>
+		<script src="wandern_data.js"></script>
 		<script src="engine.js"></script>
 		<script src="quiz.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
-		<h1>Ｓｃｈｎｉｔｚｅｌｊａｇｄ</h1>
-<!--		<h1>Schnitzeljagd</h1>-->
+		<h1 id ="quiz-title">Ｓｃｈｎｉｔｚｅｌｊａｇｄ</h1>
 		<p>
-			<img id="image-part" src="Zeichnung.svg" alt="HINWEISBILD">
+			<div id="intro-block"></div>
+			<img id="image-part" src="empty.png" alt="HINWEISBILD">
 			<div id="text-block"></div>
 			<input id="input-pass" type="text">
 			<input id="commit-button" type="button" value="prüfe…">
 		</p>
 		<p>
+			<input id="submit-button" type="button" value="submit to server">
+		</p>
+		<p>
 			<input id="next-button" type="button" value="next"> <!-- TODO only for testing -->
 			<input id="restart-button" type="button" value="restart"> <!-- TODO only for testing -->
 		<p>
-		<p>
-			<input id="submit-button" type="button" value="submit to server">
-		</p>
 	</body>
 </html>
