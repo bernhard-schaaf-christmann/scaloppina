@@ -6,14 +6,14 @@ var quiz_data = {
 		"text": "Rätsel 1",
 		"title" : "Rätsel 1", // TODO
 		"image": "dia-puzzle.png",
-		"next" : "aboutus"
+		"next" : "wahl"
 	},
-	"restodia": {
-		"password": "Streichholzschachtel",
-		"password_hash": "6qE5Z/T6cc1danURmLoXtqUfSuI=",
-		"password_hash_array": [ "6qE5Z/T6cc1danURmLoXtqUfSuI=", "9CfIoddfKH9jKMlxbJUlZNTmRK4=" ],
-		"text": "",
-		"image": "RestoDia.png",
+	"wahl": {
+		"password": "sieben",
+		"password_hash": "9JNIu3pL",
+		"password_hash_array": [ "6mJoyRaY", "9JNIu3pL" ],
+		"text": 'Wenn letzte Woche Bundestagswahl gewesen wäre...<br><br><table border="1"><tr><td/><td style="text-align:center">Ergebnis</td><td style="text-align:center">Veränderung zur Vorwoche</td></tr><tr><td style="text-align:center">Union</td><td style="text-align:center">37</td><td style="text-align:center">+18</td></td></tr><tr><td style="text-align:center">AFD</td><td style="text-align:center">11</td><td style="text-align:center">+2</td></tr><tr><td style="text-align:center">Linke</td><td style="text-align:center">9</td><td style="text-align:center">+4</td></tr><tr><td style="text-align:center">FDP</td><td style="text-align:center">8</td><td style="text-align:center">+6</td></tr><tr><td style="text-align:center">Grüne</td><td style="text-align:center">8</td><td style="text-align:center">+3</td></tr><tr><td style="text-align:center">SPD</td><td style="text-align:center">23</td><td style="text-align:center">+9</td></tr></table>',
+		"image": "wahl.png",
 		"next" : "papierstapel"
 	},
 	"papierstapel": {
@@ -23,6 +23,14 @@ var quiz_data = {
 		"text": "Bei der achten Iteration seines Rätsels passierte es: Ein primitiver Affe und sein Sohn kamen und sprangen wie wahnsinnig auf seine Notizen. Ordentliche Papierstapel wurden von den Primaten rücksichtslos in tausend Richtungen geschleudert. Manche landeten sogar in der Prims! Wie sollte er trotzdem rechtzeitig fertig werden? Als Klassenprimus in Mathe hatte er schließlich einen prima Ruf zu verlieren. Träge sortierte Leopold sein Rätsel über Anfangsbuchstaben wieder ordentlich. Dann der Geistesblitz! Charmanterweise ist hier ein prima Hinweis sechsmal versteckt.",
 		"image": "",
 		"next" : "aboutus"
+	},
+	"restodia": {
+		"password": "Streichholzschachtel",
+		"password_hash": "6qE5Z/T6cc1danURmLoXtqUfSuI=",
+		"password_hash_array": [ "6qE5Z/T6cc1danURmLoXtqUfSuI=", "9CfIoddfKH9jKMlxbJUlZNTmRK4=" ],
+		"text": "",
+		"image": "RestoDia.png",
+		"next" : "papierstapel"
 	},
 	"aboutus": {
 		"password" : "Tee",
