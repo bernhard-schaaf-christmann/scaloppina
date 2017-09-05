@@ -9,7 +9,9 @@ var quiz_data = {
   "waypoint_a": {
 	"password": "gwww",
     "password_hash": "fKSLYw==",
-    "text": "Folge der Spur von VSE-Net. An der ersten Einmündung nach dem Tor, das sich von Geisterhand zu bewegen scheint, befinden sich links vier technische Schilder. Was kennzeichnen die Schilder? Von links nach rechts, nenne nur die die vier Anfangsbuchstaben (kleinschreibung).",
+	"quiz_title" : "Spuren, Geister, Zeichen",
+    "intro": "Folge der Spur von VSE-Net. An der ersten Einmündung nach dem Tor, das sich von Geisterhand zu bewegen scheint, befinden sich links vier technische Schilder.",
+    "text": "Was kennzeichnen die Schilder? Von links nach rechts, nenne nur die die vier Anfangsbuchstaben (kleinschreibung).",
     "image": "empty.png",
 	"next" : "waypoint_b"
   },
@@ -28,14 +30,4 @@ var quiz_data = {
 	"next" : ""
   }
 }
-
-// base64 codierte Bilder in als blobs
-var data_blobs = [
-	"abcde",
-	"fghij",
-	"klmno",
-	"pqrst",
-	"uvwxy",
-	"z"
-];
 

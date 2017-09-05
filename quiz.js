@@ -6,7 +6,7 @@
 /// entry point for tests
 function tests_ok(show) {
 	show("Starting internal selftest…");
-	return test_dummy(show) && test_local_storage(show); // add further test with logical and for short circuit evaluation
+	return test_dummy(show) && test_local_storage(show) && test_utf8_string_transcoder(show); // add further test with logical and for short circuit evaluation
 }
 
 /// root of tests
@@ -52,17 +52,15 @@ function main() {
 	var image_part = document.querySelector('#image-part');
 
 	var show_on_target = function() {
-//		var result = Array.prototype.join.call(Array.prototype.slice.call(arguments, 1));
-		console.log("target:", this);
 		var result = Array.prototype.join.call(arguments);
 		if (this) {
 			this.innerHTML = result;
 		}
 	}
 
-	var show_title = function() { Array.prototype.unshift.apply(arguments, quiz_title); show_on_target.apply(quiz_title, arguments); };
-	var show_intro = function() { Array.prototype.unshift.apply(arguments, intro_block); show_on_target.apply(intro_block, arguments); };
-	var show       = function() { var args = Array.prototype.slice.call(arguments); args.unshift(text_block); console.log("args: ", args); show_on_target.apply(text_block, arguments); };
+	var show_title = function() { show_on_target.apply(quiz_title, arguments); };
+	var show_intro = function() { show_on_target.apply(intro_block, arguments); };
+	var show       = function() { show_on_target.apply(text_block, arguments); };
 
 	var logn = function() { console.log.apply(this, arguments); };
 	var show_and_log = function(msg) { show.apply(this, arguments); logn.apply(this, arguments); };
@@ -87,8 +85,7 @@ function main() {
 
 	var on_commit_click = function() {
 		logn("commit");
-		var pass = input_pass.value;
-		check_pass(pass);
+		check_pass(input_pass.value);
 	}
 
 	var proceed = function() {
@@ -118,7 +115,7 @@ function main() {
 		logn("submit");
 		var http = new XMLHttpRequest();
 		var url = "put_passwords.js";
-		var params = "lorem=ipsum&name=brs";
+		var params = "lorem=ipsum&name=brs"; // TODO JSON local_data und gefundene Lösungen verschicken
 		http.open("POST", url, true);
 
 		//Send the proper header information along with the request
@@ -135,12 +132,12 @@ function main() {
 	var check_pass = function(pass) {  // TODO vermutlich wird dieses Event beim Bild wechsel einmal zu oft ausgeführt, was man nur merkt, wenn zwei hintereinanderfolgende Rätsel die selbe Lösung haben.
 		var stage = local_data.stage;
 		var hash = transcoder.encode(pass);
-		logn("checking answer: ", pass, " hash ", hash);
 		var needed_hash = quiz_data[stage].password_hash;
-		logn("needed: ", needed_hash);
+		logn("checking answer: <"+pass+"> hash <"+hash+"> needed <"+needed_hash+">");
 		if (hash == needed_hash) {
 			logn("correct!");
 			proceed();
+			return;
 		}
 		logn("Sorry, wrong!");
 	}
@@ -156,13 +153,24 @@ function main() {
 	submit_button.addEventListener('click', on_submit_click);
 	input_pass.addEventListener('change', on_pass_input);
 
+	var clear_input_pass = function() {
+		input_pass.value = "";
+	}
+
 	var redraw = function() {
+		clear_input_pass();
 		var stage = local_data.stage;
 		var next = quiz_data[stage].next;
 		var image_file_name = quiz_data[stage].image;
-		show_and_log(quiz_data[stage].text);
-		image_part.src = image_file_name;
-		logn(next);
+		var quiz_title = quiz_data[stage].quiz_title;
+		var intro = quiz_data[stage].intro;
+		var text = quiz_data[stage].text;
+		logn("stage:", stage);
+		if (quiz_title) { logn(quiz_title); show_title(quiz_title); } else { show_title("Ｓｃｈｎｉｔｚｅｌｊａｇｄ"); }
+		if (intro) { logn(intro); show_intro(intro); } else { show_intro(""); }
+		if (text) { logn(text); show(text); } else { show(""); }
+		if (image_file_name) { image_part.src = image_file_name; } else { image_part.src = ""; }
+		logn("next:", next);
 	}
 	redraw()
 }

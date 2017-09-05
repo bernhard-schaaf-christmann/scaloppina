@@ -4,7 +4,7 @@ var quiz_data = {
 		"password_hash": "QPs0ycKwE80=",
 		"password_hash_array": [ "QPs0ycKwE80=", "8Amku7BcM+U=" ],
 		"text": "Rätsel 1",
-		"title" : "Rätsel 1", // TODO
+		"quiz_title" : "Rätsel 1",
 		"image": "dia-puzzle.png",
 		"next" : "restodia"
 	},
@@ -49,12 +49,3 @@ var quiz_data = {
 	}
 }
 
-// base64 codierte Bilder in als blobs
-var data_blobs = [
-	"abcde",
-	"fghij",
-	"klmno",
-	"pqrst",
-	"uvwxy",
-	"z"
-];
