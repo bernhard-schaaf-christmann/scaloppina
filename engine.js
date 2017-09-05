@@ -113,11 +113,12 @@ Transcoder.prototype.reset = function() {
 }
 
 Transcoder.prototype.encode_single_octet = function(byte) {
-	return byte+1; // TODO, add LFSR and step
+	var state = this.LFSR.step(byte); // run through the states
+	return state & 0xFF;
 }
 
 /// encode some message, including conversion to octet stream
-Transcoder.prototype.encode = function(unicode) { // TODO probably initialize LFSR in some state?
+Transcoder.prototype.encode_to_array_further = function(unicode) { // TODO probably initialize LFSR in some state?
 	var data = unicodeStringToTypedArray(unicode);
 
 	var self = this;
@@ -126,6 +127,25 @@ Transcoder.prototype.encode = function(unicode) { // TODO probably initialize LF
     });
 
 	return data;
+}
+
+Transcoder.prototype.encode_to_array = function(unicode) {
+	this.reset();
+	return this.encode_to_array_further(unicode);
+}
+
+Transcoder.prototype.to_base64 = function(uint8array) {
+	var binary = '';
+	var bytes = new Uint8Array( uint8array );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+}
+
+Transcoder.prototype.encode = function(unicode) {
+	return this.to_base64(this.encode_to_array(unicode));
 }
 /*****************************************************************************/
 
@@ -167,43 +187,3 @@ function test_utf8_string_transcoder(show) {
 	return true
 }
 /*****************************************************************************/
-
-/// our entry point
-function main() {
-	console.log("HI and WELCOME");
-	var text_block = document.querySelector('#text-block');
-	console.log(text_block);
-
-	var show = function(message) {
-		if (text_block) {
-			text_block.innerHTML = message;
-		}
-	}
-	if (!tests_ok(function(msg) {show(msg); console.log(msg)})) {
-		show("Some Tests failed. Stopping. We think this platform is not appropriate to run this. Sorry.");
-		return;
-	}
-	show("Starte Berechnung…");
-
-	var transcoder = new Transcoder();
-	var tick = function() {
-		var boost = 256; // we don't want to show every single step, to slow
-		var result = transcoder.step_check_lfsr_period();
-		while (boost > 0 && !result.finished) {
-			result = transcoder.step_check_lfsr_period();
-			--boost;
-		}
-		if (!result.finished) {
-			/// still some string juggling necessary because of inconveniences of underlying transcoder
-			show("Berechnung läuft…<br>Linear Feedback Shift Register-Wert = 0x"+("000" + result.lfsr.toString(16)).slice(-4)+"<br>Schritte: "+result.period);
-			setTimeout(tick, 1);
-		} else {
-			show("Fertig!<br>Linear Feedback Shift Register-Wert = 0x"+("000" + result.lfsr.toString(16)).slice(-4)+"<br>Periode: "+result.period);
-		}
-	}
-
-	console.log(transcoder.encode("🏁 Ä Ö Ü ä ö ü ß € µ – · … Hallo Leute!")); // many special multibyte characters.
-	tick();
-}
-
-window.onload = main;

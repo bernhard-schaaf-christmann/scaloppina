@@ -39,11 +39,14 @@ function test_local_storage(show) {
 /// our entry point
 function main() {
 	console.log("HI and WELCOME");
+	// TODO test_ok ausführen und bei Misserfolg dem Nutzer mitteilen
+	var transcoder = new Transcoder();
 	var text_block = document.querySelector('#text-block');
 	var commit_button = document.querySelector('#commit-button');
 	var next_button = document.querySelector('#next-button');
 	var restart_button = document.querySelector('#restart-button');
 	var submit_button = document.querySelector('#submit-button');
+	var input_pass = document.querySelector('#input-pass');
 	var image_part = document.querySelector('#image-part');
 	console.log(text_block);
 
@@ -64,7 +67,7 @@ function main() {
 	}
 	show("Starte Berechnung…");
 
-	// username needed for indexing the final result
+	// TODO username needed for indexing the final result
 	var local_data = {
 		"username" : "brs",
 		"stage" : "start"
@@ -86,10 +89,11 @@ REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq\
 ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0\
 vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-URL
 		show_image(image_data_url, 50, 50, "direkt Bilddaten"); // TODO just testing direkt data drawing
+		var pass = input_pass.value;
+		check_pass(pass);
 	}
 
-	var on_next_click = function() {
-		logn("next");
+	var proceed = function() {
 		var stage = local_data.stage;
 		var next = quiz_data[stage].next;
 		if (0 == next.length) {
@@ -98,6 +102,11 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 		local_data.stage = next;
 		put_local_data(local_data);
 		redraw();
+	}
+
+	var on_next_click = function() {
+		logn("next");
+		proceed();
 	}
 
 	var on_restart_click = function() {
@@ -125,10 +134,29 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 		http.send(params);
 	}
 
+	var check_pass = function(pass) {  // TODO vermutlich wird dieses Event beim Bild wechsel einmal zu oft ausgeführt, was man nur merkt, wenn zwei hintereinanderfolgende Rätsel die selbe Lösung haben.
+		var stage = local_data.stage;
+		var hash = transcoder.encode(pass);
+		logn("checking answer: ", pass, " hash ", hash);
+		var needed_hash = quiz_data[stage].password_hash;
+		logn("needed: ", needed_hash);
+		if (hash == needed_hash) {
+			logn("correct!");
+			proceed();
+		}
+		logn("Sorry, wrong!");
+	}
+
+	var on_pass_input = function() {
+		var pass = this.value;
+		check_pass(pass);
+	}
+
 	commit_button.addEventListener('click', on_commit_click);
 	next_button.addEventListener('click', on_next_click);
 	restart_button.addEventListener('click', on_restart_click);
 	submit_button.addEventListener('click', on_submit_click);
+	input_pass.addEventListener('change', on_pass_input);
 
 	var redraw = function() {
 		var stage = local_data.stage;
