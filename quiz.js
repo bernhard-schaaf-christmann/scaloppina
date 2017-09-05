@@ -39,8 +39,10 @@ function test_local_storage(show) {
 /// our entry point
 function main() {
 	console.log("HI and WELCOME");
-	// TODO test_ok ausführen und bei Misserfolg dem Nutzer mitteilen
+
 	var transcoder = new Transcoder();
+	var quiz_title = document.querySelector('#quiz-title');
+	var intro_block = document.querySelector('#intro-block');
 	var text_block = document.querySelector('#text-block');
 	var commit_button = document.querySelector('#commit-button');
 	var next_button = document.querySelector('#next-button');
@@ -48,21 +50,25 @@ function main() {
 	var submit_button = document.querySelector('#submit-button');
 	var input_pass = document.querySelector('#input-pass');
 	var image_part = document.querySelector('#image-part');
-	console.log(text_block);
 
-	var show_string = function(message) {
-		if (text_block) {
-			text_block.innerHTML = message;
+	var show_on_target = function() {
+//		var result = Array.prototype.join.call(Array.prototype.slice.call(arguments, 1));
+		console.log("target:", this);
+		var result = Array.prototype.join.call(arguments);
+		if (this) {
+			this.innerHTML = result;
 		}
 	}
-	var show = function() {
-		var result = Array.prototype.join.call(arguments);
-		show_string(result);
-	}
+
+	var show_title = function() { Array.prototype.unshift.apply(arguments, quiz_title); show_on_target.apply(quiz_title, arguments); };
+	var show_intro = function() { Array.prototype.unshift.apply(arguments, intro_block); show_on_target.apply(intro_block, arguments); };
+	var show       = function() { var args = Array.prototype.slice.call(arguments); args.unshift(text_block); console.log("args: ", args); show_on_target.apply(text_block, arguments); };
+
 	var logn = function() { console.log.apply(this, arguments); };
-	var show_and_log = function(msg) {show.apply(this, arguments); logn.apply(this, arguments); };
+	var show_and_log = function(msg) { show.apply(this, arguments); logn.apply(this, arguments); };
+
 	if (!tests_ok(show_and_log)) {
-		show("Some Tests failed. Stopping. We think this platform is not appropriate to run this. Sorry.");
+		show_and_log("Some Tests failed. Stopping. We think this will not run properly on your platform. Sorry.");
 		return;
 	}
 	show("Starte Berechnung…");
@@ -81,14 +87,6 @@ function main() {
 
 	var on_commit_click = function() {
 		logn("commit");
-		var image_data_url = "data:image/png;base64,\
-iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGP\
-C/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IA\
-AAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1J\
-REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq\
-ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0\
-vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-URL
-		show_image(image_data_url, 50, 50, "direkt Bilddaten"); // TODO just testing direkt data drawing
 		var pass = input_pass.value;
 		check_pass(pass);
 	}
@@ -167,18 +165,6 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 		logn(next);
 	}
 	redraw()
-}
-
-// fom https://stackoverflow.com/q/37952083
-function show_image(src, width, height, alt) {
-  var img = document.createElement("img");
-  img.src = src;
-  img.width = width;
-  img.height = height;
-  img.alt = alt;
-
-  // This next line will just add it to the <body> tag
-  document.body.appendChild(img);
 }
 
 window.onload = main;
