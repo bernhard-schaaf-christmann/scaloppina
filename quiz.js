@@ -169,7 +169,7 @@ function main() {
 		if (quiz_title) { logn(quiz_title); show_title(quiz_title); } else { show_title("Ｓｃｈｎｉｔｚｅｌｊａｇｄ"); }
 		if (intro) { logn(intro); show_intro(intro); } else { show_intro(""); }
 		if (text) { logn(text); show(text); } else { show(""); }
-		if (image_file_name) { image_part.src = image_file_name; } else { image_part.src = ""; }
+		if (image_file_name) { image_part.src = image_file_name; } else { image_part.src = "empty.png"; }
 		logn("next:", next);
 	}
 	redraw()
