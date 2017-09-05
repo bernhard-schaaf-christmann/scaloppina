@@ -17,10 +17,17 @@ http.createServer(function(request, response) {
 //	logn.info(method);
 
 	if ("POST" == method) {
-		logn.info("They request to POST this: ", request);
-		response.writeHead(500, {"Content-Type": "text/plain"});
-		response.write("Not implemented yet\n");
-		response.end();
+//		logn.info("They request to POST this: ", request);
+		var body = '';
+		request.on('data', function (data) { body += data; });
+        request.on('end', function () {
+            console.log("POSTed: " + body);
+        });
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('post received');
+//		response.writeHead(500, {"Content-Type": "text/plain"});
+//		response.write("Not implemented yet\n");
+//		response.end();
 		return;
 	}
 

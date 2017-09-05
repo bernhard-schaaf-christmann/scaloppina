@@ -50,6 +50,7 @@ function main() {
 	var submit_button = document.querySelector('#submit-button');
 	var input_pass = document.querySelector('#input-pass');
 	var image_part = document.querySelector('#image-part');
+	var info_box = document.querySelector('#info-box');
 
 	var show_on_target = function() {
 		var result = Array.prototype.join.call(arguments);
@@ -61,12 +62,15 @@ function main() {
 	var show_title = function() { show_on_target.apply(quiz_title, arguments); };
 	var show_intro = function() { show_on_target.apply(intro_block, arguments); };
 	var show       = function() { show_on_target.apply(text_block, arguments); };
+	var show_info  = function() { var result = Array.prototype.join.call(arguments); info_box.value = result; };
 
 	var logn = function() { console.log.apply(this, arguments); };
 	var show_and_log = function(msg) { show.apply(this, arguments); logn.apply(this, arguments); };
 
 	if (!tests_ok(show_and_log)) {
-		show_and_log("Some Tests failed. Stopping. We think this will not run properly on your platform. Sorry.");
+		var msg = "Some Tests failed. Stopping. We think this will not run properly on your platform. Sorry.";
+		show_and_log(msg);
+		show_info(msg);
 		return;
 	}
 	show("Starte Berechnung…");
@@ -115,7 +119,8 @@ function main() {
 		logn("submit");
 		var http = new XMLHttpRequest();
 		var url = "put_passwords.js";
-		var params = "lorem=ipsum&name=brs"; // TODO JSON local_data und gefundene Lösungen verschicken
+		var params = JSON.stringify(local_data);
+//		var params = "lorem=ipsum&name=brs"; // TODO JSON local_data und gefundene Lösungen verschicken
 		http.open("POST", url, true);
 
 		//Send the proper header information along with the request
@@ -124,6 +129,9 @@ function main() {
 		http.onreadystatechange = function() { //Call a function when the state changes.
 			if(http.readyState == 4 && http.status == 200) {
 				logn("HTTP response of submit: ", http.responseText);
+				show_info("Server hat empfangen.");
+			} else {
+				show_info("FEHLER beim senden zum Server. Prüfe deine WLAN Verbindung.");
 			}
 		}
 		http.send(params);
@@ -136,10 +144,12 @@ function main() {
 		logn("checking answer: <"+pass+"> hash <"+hash+"> needed <"+needed_hash+">");
 		if (hash == needed_hash) {
 			logn("correct!");
+			show_info("korrekt");
 			proceed();
 			return;
 		}
 		logn("Sorry, wrong!");
+		show_info("leider falsch");
 	}
 
 	var on_pass_input = function() {
