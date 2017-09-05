@@ -1,7 +1,7 @@
 var quiz_data = {
   "start": {
 	"password" : "5,3",
-    "password_hash": "HAuz",
+    "password_hash": "HAuz", // TODO mehrere Password hashes für die Varianten
     "text": "Schachttiefste in m NN",
     "image": "Zeichnung.svg",
 	"next" : "waypoint_a"
