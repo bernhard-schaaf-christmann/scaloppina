@@ -80,24 +80,24 @@ var quiz_data = {
     },
     // Die restlichen Bilder konnte ich ohne Karte nicht mehr zuordnen.
     "waypoint_j": { // 71
-        "password" : "",
-        "password_hash": "",
+        "password" : "Marien",
+        "password_hash": "eiwRz0BZ",
         "quiz_title" : "",
         "intro": "In Richtung Gotteshaus – in Richtung Himmel", // TODO
         "text": "",
-        "next" : "finish"
+        "next" : "waypoint_k"
     },
     "waypoint_k": { // 78…82
         "password" : "MAHNUNG", // TODO
-        "password_hash": "",
-        "quiz_title" : "",
+        "password_hash": "BBo6fv5ETg==",
+        "quiz_title" : "Stadtpark",
         "intro": "Mutter und Kind, Jugend und …", // TODO besser formulieren
         "text": "",
-        "next" : "finish"
+        "next" : "waypoint_l"
     },
     "waypoint_l": { // 2821
         "password" : "21451730", // Kameraseriennummer
-        "password_hash": "",
+        "password_hash": "HvitS1KCb+Y=",
         "quiz_title" : "",
         "intro": "Autofriedhof. Die Legende besagt hier wurde ein Bus eingegraben. Wie lautet die unbedeutende Zahl auf der Fahrerseite?",
         "text": "",
@@ -107,7 +107,7 @@ var quiz_data = {
         "password" : "43",
         "password_hash": "IZc=",
         "text": "Am Ziel",
-        "image": "Zeichnung4.svg",
+        "image": "goal.svg",
         "next" : ""
     }
 }
