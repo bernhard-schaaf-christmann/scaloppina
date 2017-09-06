@@ -6,7 +6,7 @@
 /// entry point for tests
 function tests_ok(show) {
 	show("Starting internal selftest…");
-	return test_dummy(show) && test_local_storage(show); // add further test with logical and for short circuit evaluation
+	return test_dummy(show) && test_local_storage(show) && test_utf8_string_transcoder(show); // add further test with logical and for short circuit evaluation
 }
 
 /// root of tests
@@ -39,8 +39,10 @@ function test_local_storage(show) {
 /// our entry point
 function main() {
 	console.log("HI and WELCOME");
-	// TODO test_ok ausführen und bei Misserfolg dem Nutzer mitteilen
+
 	var transcoder = new Transcoder();
+	var quiz_title = document.querySelector('#quiz-title');
+	var intro_block = document.querySelector('#intro-block');
 	var text_block = document.querySelector('#text-block');
 	var commit_button = document.querySelector('#commit-button');
 	var next_button = document.querySelector('#next-button');
@@ -48,21 +50,27 @@ function main() {
 	var submit_button = document.querySelector('#submit-button');
 	var input_pass = document.querySelector('#input-pass');
 	var image_part = document.querySelector('#image-part');
-	console.log(text_block);
+	var info_box = document.querySelector('#info-box');
 
-	var show_string = function(message) {
-		if (text_block) {
-			text_block.innerHTML = message;
+	var show_on_target = function() {
+		var result = Array.prototype.join.call(arguments);
+		if (this) {
+			this.innerHTML = result;
 		}
 	}
-	var show = function() {
-		var result = Array.prototype.join.call(arguments);
-		show_string(result);
-	}
+
+	var show_title = function() { show_on_target.apply(quiz_title, arguments); };
+	var show_intro = function() { show_on_target.apply(intro_block, arguments); };
+	var show       = function() { show_on_target.apply(text_block, arguments); };
+	var show_info  = function() { var result = Array.prototype.join.call(arguments); info_box.value = result; };
+
 	var logn = function() { console.log.apply(this, arguments); };
-	var show_and_log = function(msg) {show.apply(this, arguments); logn.apply(this, arguments); };
+	var show_and_log = function(msg) { show.apply(this, arguments); logn.apply(this, arguments); };
+
 	if (!tests_ok(show_and_log)) {
-		show("Some Tests failed. Stopping. We think this platform is not appropriate to run this. Sorry.");
+		var msg = "Some Tests failed. Stopping. We think this will not run properly on your platform. Sorry.";
+		show_and_log(msg);
+		show_info(msg);
 		return;
 	}
 	show("Starte Berechnung…");
@@ -81,16 +89,7 @@ function main() {
 
 	var on_commit_click = function() {
 		logn("commit");
-		var image_data_url = "data:image/png;base64,\
-iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGP\
-C/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IA\
-AAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1J\
-REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq\
-ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0\
-vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-URL
-		show_image(image_data_url, 50, 50, "direkt Bilddaten"); // TODO just testing direkt data drawing
-		var pass = input_pass.value;
-		check_pass(pass);
+		check_pass(input_pass.value);
 	}
 
 	var proceed = function() {
@@ -120,7 +119,8 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 		logn("submit");
 		var http = new XMLHttpRequest();
 		var url = "put_passwords.js";
-		var params = "lorem=ipsum&name=brs";
+		var params = JSON.stringify(local_data);
+//		var params = "lorem=ipsum&name=brs"; // TODO JSON local_data und gefundene Lösungen verschicken
 		http.open("POST", url, true);
 
 		//Send the proper header information along with the request
@@ -129,6 +129,9 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 		http.onreadystatechange = function() { //Call a function when the state changes.
 			if(http.readyState == 4 && http.status == 200) {
 				logn("HTTP response of submit: ", http.responseText);
+				show_info("Server hat empfangen.");
+			} else {
+				show_info("FEHLER beim senden zum Server. Prüfe deine WLAN Verbindung.");
 			}
 		}
 		http.send(params);
@@ -137,14 +140,16 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 	var check_pass = function(pass) {  // TODO vermutlich wird dieses Event beim Bild wechsel einmal zu oft ausgeführt, was man nur merkt, wenn zwei hintereinanderfolgende Rätsel die selbe Lösung haben.
 		var stage = local_data.stage;
 		var hash = transcoder.encode(pass);
-		logn("checking answer: ", pass, " hash ", hash);
 		var needed_hash = quiz_data[stage].password_hash;
-		logn("needed: ", needed_hash);
+		logn("checking answer: <"+pass+"> hash <"+hash+"> needed <"+needed_hash+">");
 		if (hash == needed_hash) {
 			logn("correct!");
+			show_info("korrekt");
 			proceed();
+			return;
 		}
 		logn("Sorry, wrong!");
+		show_info("leider falsch");
 	}
 
 	var on_pass_input = function() {
@@ -158,27 +163,26 @@ vr4MkhoXe0rZigAAAABJRU5ErkJggg=="; // from https://de.wikipedia.org/wiki/Data-UR
 	submit_button.addEventListener('click', on_submit_click);
 	input_pass.addEventListener('change', on_pass_input);
 
+	var clear_input_pass = function() {
+		input_pass.value = "";
+	}
+
 	var redraw = function() {
+		clear_input_pass();
 		var stage = local_data.stage;
 		var next = quiz_data[stage].next;
 		var image_file_name = quiz_data[stage].image;
-		show_and_log(quiz_data[stage].text);
-		image_part.src = image_file_name;
-		logn(next);
+		var quiz_title = quiz_data[stage].quiz_title;
+		var intro = quiz_data[stage].intro;
+		var text = quiz_data[stage].text;
+		logn("stage:", stage);
+		if (quiz_title) { logn(quiz_title); show_title(quiz_title); } else { show_title("Ｓｃｈｎｉｔｚｅｌｊａｇｄ"); }
+		if (intro) { logn(intro); show_intro(intro); } else { show_intro(""); }
+		if (text) { logn(text); show(text); } else { show(""); }
+		if (image_file_name) { image_part.src = image_file_name; } else { image_part.src = ""; }
+		logn("next:", next);
 	}
 	redraw()
-}
-
-// fom https://stackoverflow.com/q/37952083
-function show_image(src, width, height, alt) {
-  var img = document.createElement("img");
-  img.src = src;
-  img.width = width;
-  img.height = height;
-  img.alt = alt;
-
-  // This next line will just add it to the <body> tag
-  document.body.appendChild(img);
 }
 
 window.onload = main;

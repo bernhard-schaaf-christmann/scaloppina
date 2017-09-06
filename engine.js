@@ -118,7 +118,7 @@ Transcoder.prototype.encode_single_octet = function(byte) {
 }
 
 /// encode some message, including conversion to octet stream
-Transcoder.prototype.encode_to_array_further = function(unicode) { // TODO probably initialize LFSR in some state?
+Transcoder.prototype.encode_to_array_further = function(unicode) {
 	var data = unicodeStringToTypedArray(unicode);
 
 	var self = this;
@@ -131,6 +131,7 @@ Transcoder.prototype.encode_to_array_further = function(unicode) { // TODO proba
 
 Transcoder.prototype.encode_to_array = function(unicode) {
 	this.reset();
+	this.encode_to_array_further(unicode);
 	return this.encode_to_array_further(unicode);
 }
 
