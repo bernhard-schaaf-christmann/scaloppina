@@ -75,14 +75,10 @@ function main() {
 	}
 	show("Starte Berechnung…");
 
-	// TODO username needed for indexing the final result
 	var local_data = {
 		"username" : "brs",
 		"stage" : "start"
 	}
-//	show_and_log(local_data);
-	// TODO pre check if already local data exists on this browser instance and merge data
-	// TODO get some input from the user for the username
 	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(data)); };
 	var get_local_data = function() { return JSON.parse(localStorage.getItem("local_data")) };
 	var intermediate_data = get_local_data();
@@ -96,6 +92,8 @@ function main() {
 
 	local_data.stage = "start";
 	put_local_data(local_data);
+
+	var solutions = {};
 
 	// initializing finished
 
@@ -131,8 +129,10 @@ function main() {
 		logn("submit");
 		var http = new XMLHttpRequest();
 		var url = "put_passwords.js";
-		var params = JSON.stringify(local_data);
-//		var params = "lorem=ipsum&name=brs"; // TODO JSON local_data und gefundene Lösungen verschicken
+		var exam = JSON.parse(JSON.stringify(local_data));
+		exam.solutions = solutions;
+		exam.location = window.location.pathname;
+		var params = JSON.stringify(exam);
 		http.open("POST", url, true);
 
 		//Send the proper header information along with the request
@@ -157,6 +157,7 @@ function main() {
 		if (hash == needed_hash) {
 			logn("correct!");
 			show_info("korrekt");
+			solutions[stage] = pass;
 			proceed();
 			return;
 		}
