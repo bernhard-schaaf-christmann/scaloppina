@@ -80,12 +80,24 @@ function main() {
 		"username" : "brs",
 		"stage" : "start"
 	}
-	show_and_log(local_data);
+//	show_and_log(local_data);
 	// TODO pre check if already local data exists on this browser instance and merge data
 	// TODO get some input from the user for the username
-	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(local_data)); };
+	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(data)); };
 	var get_local_data = function() { return JSON.parse(localStorage.getItem("local_data")) };
-	put_local_data(local_data); // TODO check if we have privious data and ask(?) if we want to keep it
+	var intermediate_data = get_local_data();
+	if (!intermediate_data) {
+		put_local_data(local_data);
+		logn("no local data found. initializing it.");
+	} else {
+		local_data = intermediate_data;
+		logn("local data found. using it.");
+	}
+
+	local_data.stage = "start";
+	put_local_data(local_data);
+
+	// initializing finished
 
 	var on_commit_click = function() {
 		logn("commit");
