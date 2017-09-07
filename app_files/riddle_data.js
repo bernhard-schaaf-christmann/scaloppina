@@ -2,7 +2,7 @@ var quiz_data = {
 	"start": {
 		"password" : "empathie",
 		"password_hash": "Xj/TxaPV5tN6rSM6mF9gqQ==",
-		"text": "Rätsel 1",
+		"text": "",
 		"quiz_title" : "Rätsel 1: Dialogika-Mitarbeiter",
 		"image": "dia-puzzle.png",
 		"next" : "wahl"
