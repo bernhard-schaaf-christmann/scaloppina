@@ -146,7 +146,7 @@ Transcoder.prototype.to_base64 = function(uint8array) {
 }
 
 Transcoder.prototype.encode = function(unicode) {
-	return this.to_base64(this.encode_to_array(unicode));
+	return this.to_base64(this.encode_to_array(unicode+unicode));
 }
 /*****************************************************************************/
 
