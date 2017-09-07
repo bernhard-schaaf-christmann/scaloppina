@@ -5,6 +5,8 @@ var http = require("http"),
 	fs = require("fs"),
 	port = process.argv[2] || 8888;
 
+const SERVE_DIR = "app_files/"
+
 var logn = {
 	info : function() {
 		console.log.apply(this, arguments); // varargs
@@ -17,14 +19,21 @@ http.createServer(function(request, response) {
 //	logn.info(method);
 
 	if ("POST" == method) {
-		logn.info("They request to POST this: ", request);
-		response.writeHead(500, {"Content-Type": "text/plain"});
-		response.write("Not implemented yet\n");
-		response.end();
+//		logn.info("They request to POST this: ", request);
+		var body = '';
+		request.on('data', function (data) { body += data; });
+        request.on('end', function () {
+            console.log("POSTed: " + body);
+        });
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('post received');
+//		response.writeHead(500, {"Content-Type": "text/plain"});
+//		response.write("Not implemented yet\n");
+//		response.end();
 		return;
 	}
 
-	var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), uri);
+	var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), SERVE_DIR, uri);
 
 	fs.exists(filename, function(exists) {
 		if(!exists) {

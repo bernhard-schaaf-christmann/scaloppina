@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang=de manifest="scaloppina.appcache">
+	<head>
+		<meta charset=utf-8>
+		<link rel="stylesheet" href="style.css" type="text/css">
+		<title>Hunt for Scaloppina – Wanderlust Edition</title>
+		<script src="wandern_data.js"></script>
+		<script src="engine.js"></script>
+		<script src="quiz.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<h1 id ="quiz-title">Ｓｃｈｎｉｔｚｅｌｊａｇｄ</h1>
+		<p>
+			<div id="intro-block"></div>
+			<img id="image-part" src="empty.png">
+			<div id="text-block"></div>
+		</p>
+		<p>
+			<input id="commit-button" type="button" value="prüfe…">
+			<input id="input-pass" type="text" style="width: 50%;">
+		</p>
+		<p>
+			<label>Letzte Info – </label><input id="info-box" type="text" value="..." disabled="true" style="width: 50%;">
+		</p>
+		<p>
+			<input id="submit-button" type="button" value="zum Server senden">
+		</p>
+		<p>
+			<input id="next-button" type="button" value="next"> <!-- TODO only for testing -->
+			<input id="restart-button" type="button" value="restart"> <!-- TODO only for testing -->
+		<p>
+	</body>
+</html>
