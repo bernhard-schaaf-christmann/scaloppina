@@ -1,34 +1,101 @@
 <!doctype html>
+
+<!--
+intro:
+	id: intro-area
+				-> set display (dgebi.style="display:block; / display:none;")
+				-> set text (dgebi.innerHtml = "")
+
+text:
+	id: text_area
+				-> set display (dgebi.style="display:block; / display:none;")
+				-> set text (dgebi.innerHtml = "")
+
+image:
+	id: main_content_image
+				-> set display (dgebi.style="display:block; / display:none;")
+	id: image_link
+				-> set href (dgebi.href="")
+	id: image
+				-> set source (dgebi.src="")
+
+response:
+	id: answer_input
+				-> set class (dgebi.class="default / error")
+	id: info_box
+				-> set class (dgebi.class="default / error")
+				-> set text (dgebi.innerHtml = "")
+
+
+-->
+
 <html lang=de manifest="scaloppina.appcache">
 	<head>
 		<meta charset=utf-8>
 		<link rel="stylesheet" href="style.css" type="text/css">
 		<title>Hunt for Scaloppina – Riddle Edition</title>
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
 		<script src="riddle_data.js"></script>
 		<script src="engine.js"></script>
 		<script src="quiz.js"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<script>
+			//block reload
+			window.onbeforeunload = function () {return false;}
+		</script>
 	</head>
 	<body>
-		<h1 id ="quiz-title">Ｓｃｈｎｉｔｚｅｌｊａｇｄ</h1>
-		<p>
-			<div id="intro-block"></div>
-			<img id="image-part" src="empty.png">
-			<div id="text-block"></div>
-		</p>
-		<p>
-			<input id="commit-button" type="button" value="prüfe…">
-			<input id="input-pass" type="text" style="width: 50%;">
-		</p>
-		<p>
-			<label>Letzte Info – </label><input id="info-box" type="text" value="..." disabled="true" style="width: 50%;">
-		</p>
-		<p>
-			<input id="submit-button" type="button" value="zum Server senden">
-		</p>
-		<p>
-			<input id="next-button" type="button" value="next"> <!-- TODO only for testing -->
-			<input id="restart-button" type="button" value="restart"> <!-- TODO only for testing -->
-		<p>
+		<div class="main_content_box">
+
+			<!-- HEADING -->
+			<div class="main_content_heading" id ="quiz-title">Schnitzeljagd - Hunt for Scaloppina</div>
+			<div class="divider"></div>
+
+			<!-- INTRO TEXT -->
+			<div class="main_content_text" id="intro_area" style="display:block;">
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+				<div class="divider"></div>
+			</div>
+
+			<!-- IMAGE -->
+			<div class="main_content_image" style="display:block;">
+				<a id="image_link" href="example.jpg" target="_blank">
+					<img class="image_fixed_width" id="image" src="example.jpg" alt="irgendein Bild">
+				</a>
+				<div class="divider"></div>
+			</div>
+
+			<!-- MAIN TEXT -->
+			<div class="main_content_text" id="text_area" style="display:block;">
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+				<div class="divider"></div>
+			</div>
+
+			<!-- USER INPUT AREA -->
+			<div class="main_content_user_input">
+				<input class="default" id="answer_input" type="text" placeholder="Antwort..." style="width: calc(60vw - 3px);">
+				<input class="default" id="commit_button" type="button" value="prüfen" style="margin-left: 2vw; width: calc(20vw - 3px);">
+
+				<div class="default" id="info_box">Du hast noch keine Antwort abgesendet.</div>
+
+				<div class="divider"></div>
+			</div>
+
+			<!-- SEND RESULTS TO SERVER -->
+			<input class="default" id="submit-button" type="button" value="zum Server senden">
+
+
+			<!-- DEBUG ENTFERNEN -->
+			<div class="divider"></div>
+
+			<input class="default" id="next-button" type="button" value="next">
+			<input class="default" id="restart-button" type="button" value="restart">
+			<!-- DEBUG ENDE -->
+		</div>
 	</body>
 </html>

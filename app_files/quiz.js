@@ -42,15 +42,17 @@ function main() {
 
 	var transcoder = new Transcoder();
 	var quiz_title = document.querySelector('#quiz-title');
-	var intro_block = document.querySelector('#intro-block');
-	var text_block = document.querySelector('#text-block');
-	var commit_button = document.querySelector('#commit-button');
+	var intro_area = document.querySelector('#intro_area');
+	var main_content_image = document.querySelector('#main_content_image');
+	var image_link = document.querySelector('#image_link');
+	var image = document.querySelector('#image');
+	var text_area = document.querySelector('#text_area');
+	var answer_input = document.querySelector('#answer_input');
+	var commit_button = document.querySelector('#commit_button');
+	var info_box = document.querySelector('#info_box');
 	var next_button = document.querySelector('#next-button');
 	var restart_button = document.querySelector('#restart-button');
 	var submit_button = document.querySelector('#submit-button');
-	var input_pass = document.querySelector('#input-pass');
-	var image_part = document.querySelector('#image-part');
-	var info_box = document.querySelector('#info-box');
 
 	var show_on_target = function() {
 		var result = Array.prototype.join.call(arguments);
@@ -60,20 +62,29 @@ function main() {
 	}
 
 	var show_title = function() { show_on_target.apply(quiz_title, arguments); };
-	var show_intro = function() { show_on_target.apply(intro_block, arguments); };
-	var show       = function() { show_on_target.apply(text_block, arguments); };
-	var show_info  = function() { var result = Array.prototype.join.call(arguments); info_box.value = result; };
+	var show_intro = function() { show_on_target.apply(intro_area, arguments); intro_area.style="display:block;"; };
+	var hide_intro = function() { intro_area.style="display:none;"; };
+	var show_text = function() { show_on_target.apply(text_area, arguments); text_area.style="display:block;"; };
+	var hide_text = function() { text_area.style="display:none;"; };
+
+	var show_image = function(src) { image_link.href=src; image.src=src; main_content_image="display:block;"; };
+	var hide_image = function() { main_content_image.style="display:none;"; };
+
+	var show_info = {
+		ok : function() { var result = Array.prototype.join.call(arguments); info_box.innerHTML = result; info_box["class"] = "default"; },
+	    error : function() { var result = Array.prototype.join.call(arguments); info_box.innerHTML = result; info_box["class"] = "error"; }
+	};
 
 	var logn = function() { console.log.apply(this, arguments); };
-	var show_and_log = function(msg) { show.apply(this, arguments); logn.apply(this, arguments); };
+	var show_and_log = function(msg) { show_text.apply(this, arguments); logn.apply(this, arguments); };
 
 	if (!tests_ok(show_and_log)) {
 		var msg = "Some Tests failed. Stopping. We think this will not run properly on your platform. Sorry.";
 		show_and_log(msg);
-		show_info(msg);
+		show_info.error(msg);
 		return;
 	}
-	show("Starte Berechnung…");
+	show_text("Starte Berechnung…");
 
 	var local_data = {
 		"username" : "brs",
@@ -99,7 +110,7 @@ function main() {
 
 	var on_commit_click = function() {
 		logn("commit");
-		check_pass(input_pass.value);
+		check_pass(answer_input.value);
 	}
 
 	var proceed = function() {
@@ -141,9 +152,9 @@ function main() {
 		http.onreadystatechange = function() { //Call a function when the state changes.
 			if(http.readyState == 4 && http.status == 200) {
 				logn("HTTP response of submit: ", http.responseText);
-				show_info("Server hat empfangen.");
+				show_info.ok("Server hat empfangen.");
 			} else {
-				show_info("FEHLER beim senden zum Server. Prüfe deine WLAN Verbindung.");
+				show_info.error("FEHLER beim senden zum Server. Prüfe deine WLAN Verbindung.");
 			}
 		}
 		http.send(params);
@@ -159,13 +170,13 @@ function main() {
 		logn("checking answer: <"+pass+"> hash <"+hash+"> needed <"+needed_hash+">");
 		if (hash == needed_hash) {
 			logn("correct!");
-			show_info("korrekt");
+			show_info.ok("korrekt");
 			solutions[stage] = pass;
 			proceed();
 			return;
 		}
 		logn("Sorry, wrong!");
-		show_info(toggle_strings[toggle]);
+		show_info.error(toggle_strings[toggle]);
 		toggle = toggle+1;
 		if (toggle_strings.length <= toggle) {
 			toggle = 0;
@@ -181,14 +192,14 @@ function main() {
 	next_button.addEventListener('click', on_next_click);
 	restart_button.addEventListener('click', on_restart_click);
 	submit_button.addEventListener('click', on_submit_click);
-	input_pass.addEventListener('change', on_pass_input);
+	answer_input.addEventListener('change', on_pass_input);
 
-	var clear_input_pass = function() {
-		input_pass.value = "";
+	var clear_answer_input = function() {
+		answer_input.value = "";
 	}
 
 	var redraw = function() {
-		clear_input_pass();
+		clear_answer_input();
 		var stage = local_data.stage;
 		var next = quiz_data[stage].next;
 		var image_file_name = quiz_data[stage].image;
@@ -197,9 +208,9 @@ function main() {
 		var text = quiz_data[stage].text;
 		logn("stage:", stage);
 		if (quiz_title) { logn(quiz_title); show_title(quiz_title); } else { show_title("Ｓｃｈｎｉｔｚｅｌｊａｇｄ"); }
-		if (intro) { logn(intro); show_intro(intro); } else { show_intro(""); }
-		if (text) { logn(text); show(text); } else { show(""); }
-		if (image_file_name) { image_part.src = image_file_name; } else { image_part.src = ""; }
+		if (intro) { logn(intro); show_intro(intro); } else { hide_intro(); }
+		if (text) { logn(text); show_text(text); } else { hide_text(); }
+		if (image_file_name) { show_image(image_file_name); } else { hide_image(); }
 		logn("next:", next);
 	}
 	redraw()
