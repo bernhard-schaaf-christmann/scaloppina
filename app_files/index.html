@@ -4,25 +4,36 @@
 		<meta charset=utf-8>
 		<link rel="stylesheet" href="style.css" type="text/css">
 		<title>Hunt for Scaloppina – Welcome User</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 		<script src="get_username.js"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
-		<h1 id ="quiz-title">Ｓｃｈｎｉｔｚｅｌｊａｇｄ</h1>
-		<p>
-			Willkommen.
-		</p>
-		<p>
-			Alle Teilnehmer arbeiten zusammen. Umso mehr Leute korrekte Antworten sammeln und am Ende zum Server schicken, umso mehr Information zum Lösen eines Gesamträtsel erhalten alle. Die Lösungen verwenden keine Großbuchstaben.
-		</p>
-		<p>
-			Wie lautet Dein Kürzel oder wie lauten Deine Initialen?
-		</p>
-		<p>
-			<input id="input-username" type="text">
-		</p>
-		<p>
-			<input id="button-enter-username" type="button" value="weiter…">
-		</p>
+		<div class="main_content_box">
+			<!-- HEADING -->
+			<div class="main_content_heading" id ="quiz-title">Schnitzeljagd - Hunt for Scaloppina</div>
+			<div class="divider"></div>
+
+			<!-- MAIN TEXT -->
+			<div class="main_content_text" id="text_area" style="display:block;">
+				<p>
+					Willkommen.
+				</p>
+				<p>
+					Alle Teilnehmer arbeiten zusammen. Umso mehr Leute korrekte Antworten sammeln und am Ende zum Server schicken, umso mehr Information zum Lösen eines Gesamträtsel erhalten alle. Die Lösungen verwenden keine Großbuchstaben.
+				</p>
+				<p>
+					Wie lautet Dein Kürzel oder wie lauten Deine Initialen?
+				</p>
+				<div class="divider"></div>
+			</div>
+
+			<!-- USER INPUT AREA -->
+			<div class="main_content_user_input">
+				<input class="default" id="input-username" type="text" placeholder="Name..." style="width: calc(60vw - 3px);">
+				<input class="default" id="button-enter-username" type="button" value="weiter" style="margin-left: 2vw; width: calc(20vw - 3px);">
+			</div>
+		</div>
 	</body>
 </html>

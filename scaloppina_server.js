@@ -13,6 +13,37 @@ var logn = {
 	}
 }
 
+var submitted_solutions = {};
+
+var merge_solution = function(body) {
+	var solution = JSON.parse(body);
+	var username = solution.username;
+	var location_result = solution.location.match('\/([^\.]*)');
+	var location = location_result[1];
+	logn.info("location",location);
+	if (!location) { return; }
+	if (!submitted_solutions[location]) { submitted_solutions[location] = {}; }
+	submitted_solutions[location][username] = solution;
+	logn.info(JSON.stringify(submitted_solutions));
+}
+
+var evaluate_solutions = function() {
+	for (locus in submitted_solutions) {
+		logn.info(locus);
+		(function(location) {
+			var filename = SERVE_DIR+location+"_data.js";
+			var local_callback = function(err, file) {
+				if(err) {
+					return;
+				}
+				logn.info("\n\n\nsourcing:", location);
+				logn.info(file.toString("utf8"));
+			};
+			fs.readFile(filename, local_callback);
+		})(locus);
+	}
+}
+
 http.createServer(function(request, response) {
 
 	var method = request.method;
@@ -24,12 +55,11 @@ http.createServer(function(request, response) {
 		request.on('data', function (data) { body += data; });
         request.on('end', function () {
             console.log("POSTed: " + body);
+			merge_solution(body);
+			evaluate_solutions();
         });
         response.writeHead(200, {'Content-Type': 'text/html'});
         response.end('post received');
-//		response.writeHead(500, {"Content-Type": "text/plain"});
-//		response.write("Not implemented yet\n");
-//		response.end();
 		return;
 	}
 

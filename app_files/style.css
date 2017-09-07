@@ -1,1 +1,156 @@
-body      { font-family: arial, sans-serif; color: #001; background-color: #ffe; }
+/* from	"http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"*/
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), format('ttf');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), format('ttf');
+}
+
+body, html {
+    width: 100%;
+    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+    background: url('background.png');
+}
+
+img.image_fixed_width {
+/*    border: 2px solid rgba(0,0,0,0.3);*/
+    border: none;
+    width: calc(100% - 4px);
+    display: block;
+}
+
+/** CLASSES **/
+.main_content_box {
+    width: calc(100vw - 16vw); /*vw: viewportwidth, percentual*/
+    min-height: calc(100vh - 16vw); /*vh: viewportheight, percentual*/
+    overflow: hidden;
+    margin: 5vw;
+    padding: 3vw;
+    background: rgba(255,255,255,1);
+    box-shadow: 0 0 8px 8px rgba(0,0,0,0.15);
+}
+
+.main_content_heading {
+    width: 100%;
+    float: left;
+    text-align: center;
+    font-size: 150%;
+    font-weight: 300;
+}
+
+.main_content_image {
+    width: 100%;
+    float: left;
+}
+
+.main_content_text {
+    width: 100%;
+    float: left;
+    font-size: 95%;
+}
+
+.main_content_user_input {
+    width: 100%;
+    float: left;
+}
+
+
+
+.divider {
+    padding: 2vw 0 0 0;
+    margin: 0 0 2vw 0;
+    width: 100%;
+    float: left;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
+}
+
+div.default {
+    width: 100%;
+    float: left;
+    font-size: 95%;
+    color: rgba(0,0,0,1);
+    font-style: italic;
+    margin: 2vw 0 0 0;
+}
+
+div.error {
+    width: 100%;
+    float: left;
+    font-size: 95%;
+    color: rgba(255,20,10,1);
+    font-style: italic;
+    margin: 2vw 0 0 0;
+}
+
+/** INPUTS **/
+
+input[type=text] {
+    float: left;
+	font-family: "OpenSans", sans-serif;
+    font-size: 95%;
+	margin: 0 0;
+	padding: 2vw 1vw;
+}
+
+input[type=text]:focus {
+    outline: 0;
+}
+
+input[type=text].default {
+	background: rgb(255,255,255);
+	border: 1px solid rgba(0,0,0,0.3);
+}
+
+input[type=text].default:focus {
+    border: 1px solid rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.05);
+}
+
+input[type=text].error {
+	background: rgba(255,20,10,0.05);
+	border: 1px solid rgba(255,20,10,0.3);
+}
+
+input[type=text].error:focus {
+    border: 1px solid rgba(255,20,10,0.6);
+    background: rgba(255,20,10,0.15);
+}
+
+
+
+
+input[type=button] {
+    float: left;
+	font-family: "OpenSans", sans-serif;
+    font-size: 95%;
+	margin: 0 0;
+	padding: 2vw 2vw;
+}
+
+input[type=button]:focus {
+    outline: 0;
+}
+
+input[type=button].default {
+	background-color: rgb(255,255,255);
+	border: 1px solid rgba(0,0,0,0.3);
+}
+
+input[type=button].default:focus {
+    border: 1px solid rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.05);
+}
