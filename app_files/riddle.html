@@ -2,13 +2,15 @@
 
 <!--
 intro:
-	id: intro-area
+	id: intro_main_area
 				-> set display (dgebi.style="display:block; / display:none;")
+	id: intro_area
 				-> set text (dgebi.innerHtml = "")
 
 text:
-	id: text_area
+	id: text_main_area
 				-> set display (dgebi.style="display:block; / display:none;")
+	id: text_area
 				-> set text (dgebi.innerHtml = "")
 
 image:
@@ -35,8 +37,6 @@ response:
 		<link rel="stylesheet" href="style.css" type="text/css">
 		<title>Hunt for Scaloppina – Riddle Edition</title>
 
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-
 		<script src="riddle_data.js"></script>
 		<script src="engine.js"></script>
 		<script src="quiz.js"></script>
@@ -44,7 +44,7 @@ response:
 
 		<script>
 			//block reload
-			window.onbeforeunload = function () {return false;}
+			window.onbeforeunload = function () {return false;} // TODO ausschalten (return true) bevor man auf das Gesamträtsel wechselt
 		</script>
 	</head>
 	<body>
@@ -55,24 +55,26 @@ response:
 			<div class="divider"></div>
 
 			<!-- INTRO TEXT -->
-			<div class="main_content_text" id="intro_area" style="display:block;">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
+			<div class="main_content_text" id="intro_main_area" style="display:block;">
+				<div id="intro_area">
+					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				</div>
 				<div class="divider"></div>
 			</div>
 
 			<!-- IMAGE -->
-			<div class="main_content_image" style="display:block;">
-				<a id="image_link" href="example.jpg" target="_blank">
-					<img class="image_fixed_width" id="image" src="example.jpg" alt="irgendein Bild">
+			<div class="main_content_image" id="main_content_image" style="display:block;">
+				<a id="image_link" href="empty.png" target="_blank">
+					<img class="image_fixed_width" id="image" src="empty.png" alt="irgendein Bild">
 				</a>
 				<div class="divider"></div>
 			</div>
 
 			<!-- MAIN TEXT -->
-			<div class="main_content_text" id="text_area" style="display:block;">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
+			<div class="main_content_text" id="text_main_area" style="display:block;">
+				<div id="text_area">
+					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				</div>
 				<div class="divider"></div>
 			</div>
 
@@ -87,14 +89,15 @@ response:
 			</div>
 
 			<!-- SEND RESULTS TO SERVER -->
-			<input class="default" id="submit-button" type="button" value="zum Server senden">
+			<input class="default" id="submit-button" type="button" value="Lösung abgeben">
 
 
 			<!-- DEBUG ENTFERNEN -->
-			<div class="divider"></div>
-
-			<input class="default" id="next-button" type="button" value="next">
-			<input class="default" id="restart-button" type="button" value="restart">
+			<div class="main_content_text" id="admin_area" style="display:none;">
+				<div class="divider"></div>
+				<input class="default" id="next-button" type="button" value="next">
+				<input class="default" id="restart-button" type="button" value="restart">
+			</div>
 			<!-- DEBUG ENDE -->
 		</div>
 	</body>

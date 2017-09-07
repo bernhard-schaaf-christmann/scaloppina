@@ -42,11 +42,13 @@ function main() {
 
 	var transcoder = new Transcoder();
 	var quiz_title = document.querySelector('#quiz-title');
+	var intro_main_area = document.querySelector('#intro_main_area');
 	var intro_area = document.querySelector('#intro_area');
 	var main_content_image = document.querySelector('#main_content_image');
 	var image_link = document.querySelector('#image_link');
 	var image = document.querySelector('#image');
 	var text_area = document.querySelector('#text_area');
+	var text_main_area = document.querySelector('#text_main_area');
 	var answer_input = document.querySelector('#answer_input');
 	var commit_button = document.querySelector('#commit_button');
 	var info_box = document.querySelector('#info_box');
@@ -62,17 +64,17 @@ function main() {
 	}
 
 	var show_title = function() { show_on_target.apply(quiz_title, arguments); };
-	var show_intro = function() { show_on_target.apply(intro_area, arguments); intro_area.style="display:block;"; };
-	var hide_intro = function() { intro_area.style="display:none;"; };
-	var show_text = function() { show_on_target.apply(text_area, arguments); text_area.style="display:block;"; };
-	var hide_text = function() { text_area.style="display:none;"; };
+	var show_intro = function() { show_on_target.apply(intro_area, arguments); intro_main_area.style="display:block;"; };
+	var hide_intro = function() { intro_main_area.style="display:none;"; };
+	var show_text = function() { show_on_target.apply(text_area, arguments); text_main_area.style="display:block;"; };
+	var hide_text = function() { text_main_area.style="display:none;"; };
 
-	var show_image = function(src) { image_link.href=src; image.src=src; main_content_image="display:block;"; };
+	var show_image = function(src) { image_link.href=src; image.src=src; main_content_image.style="display:block;"; };
 	var hide_image = function() { main_content_image.style="display:none;"; };
 
 	var show_info = {
-		ok : function() { var result = Array.prototype.join.call(arguments); info_box.innerHTML = result; info_box["class"] = "default"; },
-	    error : function() { var result = Array.prototype.join.call(arguments); info_box.innerHTML = result; info_box["class"] = "error"; }
+		ok : function() { var result = Array.prototype.join.call(arguments); info_box.innerHTML = result; info_box.className = "default"; answer_input.className = "default"; },
+	    error : function() { var result = Array.prototype.join.call(arguments); info_box.innerHTML = result; info_box.className = "error"; answer_input.className = "error"; }
 	};
 
 	var logn = function() { console.log.apply(this, arguments); };
@@ -87,7 +89,7 @@ function main() {
 	show_text("Starte Berechnung…");
 
 	var local_data = {
-		"username" : "brs",
+		"username" : "player01",
 		"stage" : "start"
 	}
 	var put_local_data = function(data) { localStorage.setItem("local_data", JSON.stringify(data)); };
