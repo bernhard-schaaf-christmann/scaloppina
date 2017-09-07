@@ -149,6 +149,9 @@ function main() {
 		http.send(params);
 	}
 
+	var toggle = 0;
+	var toggle_strings = ["leider falsch", "nicht korrekt", "deine lösung passt nicht"];
+
 	var check_pass = function(pass) {  // TODO vermutlich wird dieses Event beim Bild wechsel einmal zu oft ausgeführt, was man nur merkt, wenn zwei hintereinanderfolgende Rätsel die selbe Lösung haben.
 		var stage = local_data.stage;
 		var hash = transcoder.encode(pass);
@@ -162,7 +165,11 @@ function main() {
 			return;
 		}
 		logn("Sorry, wrong!");
-		show_info("leider falsch");
+		show_info(toggle_strings[toggle]);
+		toggle = toggle+1;
+		if (toggle_strings.length <= toggle) {
+			toggle = 0;
+		}
 	}
 
 	var on_pass_input = function() {
