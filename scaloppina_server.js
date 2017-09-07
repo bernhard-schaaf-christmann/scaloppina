@@ -20,29 +20,46 @@ var merge_solution = function(body) {
 	var username = solution.username;
 	var location_result = solution.location.match('\/([^\.]*)');
 	var location = location_result[1];
-	logn.info("location",location);
+//	logn.info("location",location);
 	if (!location) { return; }
 	if (!submitted_solutions[location]) { submitted_solutions[location] = {}; }
 	submitted_solutions[location][username] = solution;
-	logn.info(JSON.stringify(submitted_solutions));
+	var submitted_solutions_str = JSON.stringify(submitted_solutions)
+	logn.info("User", username, "just submitted solutions for", location+".");
+//	logn.info(submitted_solutions_str);
+	fs.writeFile("submitted_solutions.json", submitted_solutions_str);
 }
 
 var evaluate_solutions = function() {
-	for (locus in submitted_solutions) {
-		logn.info(locus);
+	for (var locus in submitted_solutions) {
+//		logn.info(locus);
 		(function(location) {
 			var filename = SERVE_DIR+location+"_data.js";
 			var local_callback = function(err, file) {
 				if(err) {
 					return;
 				}
-				logn.info("\n\n\nsourcing:", location);
-				logn.info(file.toString("utf8"));
+				logn.info("sourcing:", filename);
+				var file_source = file.toString("utf8");
+				eval(file_source);
+				quiz_data_call(location, quiz_data);
 			};
 			fs.readFile(filename, local_callback);
 		})(locus);
 	}
 }
+
+var quiz_data_call = function(location, quiz_data) {
+	var cardinality = Object.keys(quiz_data).length-1;
+	console.log(location, "=", quiz_data, "cardinality", cardinality);
+	for (var username in submitted_solutions[location]) {
+		for (var stage in submitted_solutions[location][username].solutions) {
+			var submitted_password = submitted_solutions[location][username].solutions[stage];
+			var needed_password_hash = quiz_data[stage].password_hash;
+			logn.info("pass:", submitted_password, "needed", needed_password_hash);
+		}
+	}
+};
 
 http.createServer(function(request, response) {
 
@@ -54,7 +71,7 @@ http.createServer(function(request, response) {
 		var body = '';
 		request.on('data', function (data) { body += data; });
         request.on('end', function () {
-            console.log("POSTed: " + body);
+//            console.log("POSTed: " + body.length);
 			merge_solution(body);
 			evaluate_solutions();
         });
