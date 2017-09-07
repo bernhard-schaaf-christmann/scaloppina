@@ -5,6 +5,8 @@ var http = require("http"),
 	fs = require("fs"),
 	port = process.argv[2] || 8888;
 
+const SERVE_DIR = "app_files/"
+
 var logn = {
 	info : function() {
 		console.log.apply(this, arguments); // varargs
@@ -31,7 +33,7 @@ http.createServer(function(request, response) {
 		return;
 	}
 
-	var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), uri);
+	var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), SERVE_DIR, uri);
 
 	fs.exists(filename, function(exists) {
 		if(!exists) {
