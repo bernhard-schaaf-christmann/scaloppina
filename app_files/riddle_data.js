@@ -57,10 +57,10 @@ var quiz_data = {
 		"next": "laby"
     },
 	"laby": {
-		"password" : "teil",
-		"password_hash": "hCg7NwOCloA=",
+		"password" : "leute",
+		"password_hash": "NHnYx4IKaKcuOw==",
 		"quiz_title" : "Rätsel 8: Das Labyrinth",
-		"text": "Hinweis: Die Lösung hat vier Buchstaben.",
+		"text": "Hinweis: Die Lösung hat fünf Buchstaben.",
 		"image": "laby3.png",
 		"next" : "done"
 	},
