@@ -1,11 +1,13 @@
 var quiz_data = {
     "start": {
+        "password" : "5,3",
         "password_hash": "XB+Gq74k",
         "quiz_title" : "Aller Anfang ist leicht",
         "text": "Wieviel beträgt die Schachttiefe in m NN",
         "next" : "waypoint_a"
     },
     "waypoint_a": { // 60
+        "password": "gwww",
         "password_hash": "T6fyMOmMQFo=",
         "quiz_title" : "Die Wege werden breiter",
         "intro": "An der ersten Einmündung nach dem Tor, das sich von Geisterhand zu bewegen scheint, befinden sich links vier technische Schilder.",
@@ -13,6 +15,7 @@ var quiz_data = {
         "next" : "waypoint_b"
     },
     "waypoint_b": { // 61
+        "password" : "en124",
         "password_hash": "mnZI90chHo0z3w==",
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Folge der Spur des Lichtes ein paar Schritte in Richtung Norden. Vielleicht Siehste Es - (oder au) Net",
@@ -20,6 +23,7 @@ var quiz_data = {
         "next" : "waypoint_c"
     },
     "waypoint_c": { // 62
+        "password" : "h",
         "password_hash": "c9k=",
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Nur ein paar Meter weiter sitzt ein sehr kleiner, alter Mann zwischen zwei Häusern auf der Erde.",
@@ -27,6 +31,7 @@ var quiz_data = {
         "next" : "waypoint_d"
     },
     "waypoint_d": { // 63
+        "password" : "-17",
         "password_hash": "Ij5QYb5i",
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Der moderne Marterpfahl der Straßenverwaltung wartet auf dich an der übernächsten Abzweigung.",
@@ -34,6 +39,7 @@ var quiz_data = {
         "next" : "waypoint_e"
     },
     "waypoint_e": { // 64
+        "password" : "25",
         "password_hash": "GZy3ng==",
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Vor einem Haus mit sehr auffallender Farbe steht ein Kasten mit sehr unauffälliger Farbe.",
@@ -41,6 +47,7 @@ var quiz_data = {
         "next" : "waypoint_ee"
     },
     "waypoint_ee": { // Hausnummer Blumenladen
+        "password" : "42",
         "password_hash": "", // TODO
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Viele Blumen wohnen in einem Haus in der Nähe einer viel befahrenen Straße.",
@@ -49,6 +56,7 @@ var quiz_data = {
         "next" : "waypoint_g" // Schachtdeckel hatten wir schon
     },
     "waypoint_f": { // 65
+        "password" : "",
         "password_hash": "",
         "quiz_title" : "",
         "intro": "",
@@ -57,6 +65,7 @@ var quiz_data = {
         "next" : ""
     },
     "waypoint_g": { // 66
+        "password" : "2",
         "password_hash": "muQ=", // TODO
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Auf das größte Shopping-Center weist eine Tafel aus purem Marmor hin.",
@@ -64,6 +73,7 @@ var quiz_data = {
         "next" : "waypoint_h"
     },
     "waypoint_h": { // SaarErlebnisland
+        "password" : "267",
         "password_hash": "xLeqfNHl",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Überquere den Platz und folge der Saarbrücker Fußgängerstraße bis zu einem Erlebnis, das neben einem Helden steht.",
@@ -71,6 +81,7 @@ var quiz_data = {
         "next" : "waypoint_i"
     },
     "waypoint_i": { // Heldenstatue
+        "password" : "-10",
         "password_hash": "cfmbinqH",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Direkt nebenan brütet der Held über zwei Rechenaufgaben.",
@@ -78,6 +89,7 @@ var quiz_data = {
         "next" : "waypoint_j"
     },
     "waypoint_j": { // 71
+        "password" : "marien",
         "password_hash": "mCE/uCqExl5Urebb",
         "quiz_title" : "Dem Himmel entgegen",
         "intro": "Wer hoch hinaus will, muss viel leisten. Doch am Ende erwartet ihn der Lohn Gottes.",
@@ -85,6 +97,7 @@ var quiz_data = {
         "next" : "waypoint_jj"
     },
     "waypoint_jj": { // 70 - ein anderes
+        "password" : "sepulkral",
         "password_hash": "", // TODO
         "quiz_title" : "Dem Himmel entgegen",
         "intro": "Hinter der Kirche steht ein Wegweiser, der auf ein Museum hindeutet.",
@@ -92,6 +105,7 @@ var quiz_data = {
         "next" : "waypoint_k"
     },
     "waypoint_k": { // 73
+        "password" : "weiheranlage",
         "password_hash": "", // TODO
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "Dein nächstes Ziel ist die zweite (? TODO) ausgeschilderte Sehenswürdigkeit. Doch trete noch nicht durch die Pforte sondern erstarre voller Ehrfurcht vor dem städtischen Hinweisschild.",
@@ -99,6 +113,7 @@ var quiz_data = {
         "next" : "waypoint_l"
     },
     "waypoint_l": { // 75
+        "password" : "pfau",
         "password_hash": "", // TODO
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "Folge nun dem Pfad nach Osten. An der ersten Gabelung steht ein Tier und betrachtet dich.",
@@ -106,6 +121,7 @@ var quiz_data = {
         "next" : "waypoint_m"
     },
     "waypoint_m": { // 76
+        "password" : "19222",
         "password_hash": "", // TODO
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "Nun kommen die Kleinen auf ihre Kosten. Ein freundlicher Mensch erklärt in noch freundlicheren Lettern die Spielregeln.",
@@ -113,6 +129,7 @@ var quiz_data = {
         "next" : "waypoint_n"
     },
     "waypoint_m": { // 78…82
+        "password" : "mahnung",
         "password_hash": "s2ZBGegV/ISgGE29FLk=",
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "'Mama, kannst du mich mal hochheben, damit ich über den Zaun schauen kann?'",
@@ -121,6 +138,7 @@ var quiz_data = {
     },
     // TODO Friedhof
     "waypoint_n": { // 2821
+        "password" : "21451730", // Kameraseriennummer
         "password_hash": "WWw9+b0tbbPMbYoeGONdBQ==",
         "quiz_title" : "Zu Hause ist es doch am schönsten",
         "intro": "Gehe zurück auf Los.",
@@ -128,6 +146,7 @@ var quiz_data = {
         "next" : "finish"
     },
     "finish": {
+        "password" : "42",
         "password_hash": "GeZu5w==",
         "text": "Am Ziel",
         "image": "goal.svg",
