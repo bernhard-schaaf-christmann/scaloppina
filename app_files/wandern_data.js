@@ -45,10 +45,10 @@ var quiz_data = {
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Viele Blumen wohnen in einem Haus in der Nähe einer viel befahrenen Straße.",
         "text": "Die Antwort ist die dezimale Zahl der hexadezimalen Hausnummer.",
-        "next" : "waypoint_g"
+        "next" : "waypoint_g" // Schachtdeckel hatten wir schon
     },
     "waypoint_g": { // 66
-        "password_hash": "muQ=",
+        "password_hash": "LNA=",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Auf das größte Shopping-Center weist eine Tafel aus purem Marmor hin.",
         "text": "Komischerweise wurde der Tag in binärer Darstellung verewiglicht. Wie lautet der Tag?",
@@ -128,7 +128,7 @@ var quiz_data = {
     "finish": {
         "password_hash": "GeZu5w==",
         "text": "Am Ziel",
-        "image": "goal.svg",
+        "image": "cake.jpg",
         "next" : ""
     }
 }

@@ -147,7 +147,7 @@ var quiz_data = {
         "password" : "42",
         "password_hash": "GeZu5w==",
         "text": "Am Ziel",
-        "image": "goal.svg",
+        "image": "cake.jpg",
         "next" : ""
     }
 }
