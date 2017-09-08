@@ -56,7 +56,7 @@ var quiz_data = {
     },
     "waypoint_g": { // 66
         "password" : "2",
-        "password_hash": "muQ=",
+        "password_hash": "LNA=",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Auf das größte Shopping-Center weist eine Tafel aus purem Marmor hin.",
         "text": "Komischerweise wurde der Tag in binärer Darstellung verewiglicht. Wie lautet der Tag?",
