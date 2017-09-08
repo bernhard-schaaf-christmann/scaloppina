@@ -165,7 +165,9 @@ function main() {
 	var toggle = 0;
 	var toggle_strings = ["leider falsch", "nicht korrekt", "deine lösung passt nicht"];
 
-	var check_pass = function(pass) {  // TODO vermutlich wird dieses Event beim Bild wechsel einmal zu oft ausgeführt, was man nur merkt, wenn zwei hintereinanderfolgende Rätsel die selbe Lösung haben.
+	var last_answer = "42@@42";
+
+	var check_pass = function(pass) {  // TODO Dieses Event wird sowohl beim "pruefen" druecken als auch beim Fokusverlust ausgeführt.
 		var stage = local_data.stage;
 		var hash = transcoder.encode(pass);
 		var needed_hash = quiz_data[stage].password_hash;
@@ -177,12 +179,15 @@ function main() {
 			proceed();
 			return;
 		}
-		logn("Sorry, wrong!");
-		show_info.error(toggle_strings[toggle]);
-		toggle = toggle+1;
-		if (toggle_strings.length <= toggle) {
-			toggle = 0;
+		if (last_answer != pass) {
+			logn("Sorry, wrong!");
+			show_info.error(toggle_strings[toggle]);
+			toggle = toggle+1;
+			if (toggle_strings.length <= toggle) {
+				toggle = 0;
+			}
 		}
+		last_answer = pass
 	}
 
 	var on_pass_input = function() {
