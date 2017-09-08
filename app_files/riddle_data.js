@@ -69,7 +69,10 @@ var quiz_data = {
 		"password_hash": "Y6I5+mlxGzU=",
 		"quiz_title" : "That's All Folks",
 		"text": "Am Ziel",
-		"image": "",
+		//https://pixabay.com/en/tart-cake-cakes-small-four-bake-66108/  CC0 Creative Commons
+		// Free for commercial use
+		// No attribution required
+		"image": "cake.jpg",
 		"next" : ""
 	}
 }
