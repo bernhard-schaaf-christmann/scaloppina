@@ -5,44 +5,88 @@ var http = require("http"),
 	fs = require("fs"),
 	port = process.argv[2] || 8888;
 
-const SERVE_DIR = "app_files/"
+const SERVE_DIR = "app_files/";
+const NUM_PLAYERS = 11;
+
+var Transcoder = require("./engine_node.js");
 
 var logn = {
 	info : function() {
-		console.log.apply(this, arguments); // varargs
+		console.log.apply(this, arguments);
+	},
+	debug : function() {
+//		console.log.apply(this, arguments);
 	}
 }
 
+var transcoder = new Transcoder();
+
 var submitted_solutions = {};
+var location_cardinality = 0;
+var results = {};
 
 var merge_solution = function(body) {
 	var solution = JSON.parse(body);
 	var username = solution.username;
 	var location_result = solution.location.match('\/([^\.]*)');
 	var location = location_result[1];
-	logn.info("location",location);
+//	logn.info("location",location);
 	if (!location) { return; }
 	if (!submitted_solutions[location]) { submitted_solutions[location] = {}; }
 	submitted_solutions[location][username] = solution;
-	logn.info(JSON.stringify(submitted_solutions));
+	var submitted_solutions_str = JSON.stringify(submitted_solutions)
+	logn.info("User", username, "just submitted solutions for", location+".");
+//	logn.info(submitted_solutions_str);
+	fs.writeFile("submitted_solutions.json", submitted_solutions_str);
 }
 
 var evaluate_solutions = function() {
-	for (locus in submitted_solutions) {
-		logn.info(locus);
+	location_cardinality = Object.keys(submitted_solutions).length;
+	for (var locus in submitted_solutions) {
+//		logn.info(locus);
 		(function(location) {
 			var filename = SERVE_DIR+location+"_data.js";
 			var local_callback = function(err, file) {
 				if(err) {
 					return;
 				}
-				logn.info("\n\n\nsourcing:", location);
-				logn.info(file.toString("utf8"));
+				logn.debug("sourcing:", filename);
+				var file_source = file.toString("utf8");
+				eval(file_source);
+				quiz_data_call(location, quiz_data);
 			};
 			fs.readFile(filename, local_callback);
 		})(locus);
 	}
 }
+
+var quiz_data_call = function(location, quiz_data) {
+	var cardinality = Object.keys(quiz_data).length-1;
+	var sum_strength = 0;
+	logn.debug(location, "=", quiz_data, "cardinality", cardinality);
+	for (var username in submitted_solutions[location]) {
+		var user_points = 0;
+		for (var stage in submitted_solutions[location][username].solutions) {
+			var submitted_password = submitted_solutions[location][username].solutions[stage];
+			var submitted_password_hash = transcoder.encode(submitted_password);
+			var needed_password_hash = quiz_data[stage].password_hash;
+			logn.debug("checking answer: <"+submitted_password+"> hash <"+submitted_password_hash+"> needed <"+needed_password_hash+">");
+			if (submitted_password_hash == needed_password_hash) {
+				user_points += 1;
+			}
+		}
+		var percentage = 100*user_points/cardinality;
+		logn.info("In \""+location+"\" the user "+username+" has "+user_points+"/"+cardinality+" or "+percentage+"%.");
+		if (!results[location]) { results[location] = {}; };
+		if (!results[location][username]) { results[location][username] = {}; };
+		results[location][username].percentage = percentage;
+		sum_strength += percentage;
+	}
+	logn.info("Results for "+location+": "+JSON.stringify(results[location]));
+	var accumulated_success = sum_strength/NUM_PLAYERS/100;
+	logn.info("Accumulated success="+accumulated_success);
+	logn.info("Saturated accumulated success="+Math.tanh(2*accumulated_success));
+};
 
 http.createServer(function(request, response) {
 
@@ -54,7 +98,7 @@ http.createServer(function(request, response) {
 		var body = '';
 		request.on('data', function (data) { body += data; });
         request.on('end', function () {
-            console.log("POSTed: " + body);
+//            console.log("POSTed: " + body.length);
 			merge_solution(body);
 			evaluate_solutions();
         });
