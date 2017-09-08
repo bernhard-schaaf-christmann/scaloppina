@@ -60,6 +60,14 @@ var quiz_data = {
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Auf das größte Shopping-Center weist eine Tafel aus purem Marmor hin.",
         "text": "Komischerweise wurde der Tag in binärer Darstellung verewiglicht. Wie lautet der Tag?",
+        "next" : "waypoint_gg"
+    },
+    "waypoint_gg": { // Monn mit da Stong
+        "password" : "harig",
+        "password_hash": "hhmXFfbXxSkWSg==",
+        "quiz_title" : "Wo sich Fußgänger wohlfühlen",
+        "intro": "Ganz in der Nähe hält ein auffälliger Herr einen langen Gegenstand.",
+        "text": "Welchen Nachnamen hat der Fußballspieler, der beim Anpfiff den Ball zuerst berührt?",
         "next" : "waypoint_h"
     },
     "waypoint_h": { // SaarErlebnisland

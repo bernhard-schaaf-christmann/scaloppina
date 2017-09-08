@@ -55,7 +55,7 @@ var quiz_data = {
         "next" : "waypoint_gg"
     },
     "waypoint_gg": { // Monn mit da Stong
-        "password_hash": "", // TODO pw: Harig
+        "password_hash": "hhmXFfbXxSkWSg==",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Ganz in der Nähe hält ein auffälliger Herr einen langen Gegenstand.",
         "text": "Welchen Nachnamen hat der Fußballspieler, der beim Anpfiff den Ball zuerst berührt?",
