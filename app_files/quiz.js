@@ -168,6 +168,7 @@ function main() {
 	var last_answer = "42@@42";
 
 	var check_pass = function(pass) {  // TODO Dieses Event wird sowohl beim "pruefen" druecken als auch beim Fokusverlust ausgeführt.
+		if (pass == "") return;
 		var stage = local_data.stage;
 		var hash = transcoder.encode(pass);
 		var needed_hash = quiz_data[stage].password_hash;
