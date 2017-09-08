@@ -172,6 +172,10 @@ function main() {
 		var stage = local_data.stage;
 		var hash = transcoder.encode(pass);
 		var needed_hash = quiz_data[stage].password_hash;
+		var next = quiz_data[stage].next;
+		if (0 == next.length) {
+			return;
+		}
 		logn("checking answer: <"+pass+"> hash <"+hash+"> needed <"+needed_hash+">");
 		if (hash == needed_hash) {
 			logn("correct!");
@@ -188,7 +192,7 @@ function main() {
 				toggle = 0;
 			}
 		}
-		last_answer = pass
+		last_answer = pass;
 	}
 
 	var on_pass_input = function() {
