@@ -45,7 +45,7 @@ var quiz_data = {
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Viele Blumen wohnen in einem Haus in der Nähe einer viel befahrenen Straße.",
         "text": "Die Antwort ist die dezimale Zahl der hexadezimalen Hausnummer.",
-        "next" : "waypoint_g" // Schachtdeckel hatten wir schon
+        "next" : "waypoint_g"
     },
     "waypoint_g": { // 66
         "password_hash": "muQ=",
@@ -57,7 +57,7 @@ var quiz_data = {
     "waypoint_gg": { // Monn mit da Stong
         "password_hash": "hhmXFfbXxSkWSg==",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
-        "intro": "Ganz in der Nähe hält ein auffälliger Herr einen langen Gegenstand.",
+        "intro": "Ganz in der Nähe hält ein großer Herr einen langen Gegenstand.",
         "text": "Welchen Nachnamen hat der Fußballspieler, der beim Anpfiff den Ball zuerst berührt?",
         "next" : "waypoint_h"
     },
@@ -92,15 +92,15 @@ var quiz_data = {
     "waypoint_k": { // 73
         "password_hash": "L7y0Q/hiSVEeVqT5U+xdwREhzxSagwuc",
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
-        "intro": "Dein nächstes Ziel ist die zweite (? TODO) ausgeschilderte Sehenswürdigkeit. Doch trete noch nicht durch die Pforte sondern erstarre voller Ehrfurcht vor dem städtischen Hinweisschild.",
+        "intro": "Dein nächstes Ziel ist die zweite ausgeschilderte Sehenswürdigkeit. Doch trete noch nicht durch die Pforte sondern erstarre voller Ehrfurcht vor dem städtischen Hinweisschild.",
         "text": "Vier grüne Dinge dürfen nicht betreten werden. Welches wird als vorletztes genannt?",
         "next" : "waypoint_l"
     },
     "waypoint_l": { // 75
         "password_hash": "x3d1xDNyR8k=",
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
-        "intro": "Folge nun dem Pfad nach Osten. An der ersten Gabelung steht ein Tier und betrachtet dich.",
-        "text": "Um welches Tier handelt es sich? ",
+        "intro": "Folge nun dem Pfad nach Osten. An der ersten Gabelung steht ein getarntes Tier und betrachtet dich.",
+        "text": "Um welches Tier handelt es sich?",
         "next" : "waypoint_m"
     },
     "waypoint_m": { // 76
