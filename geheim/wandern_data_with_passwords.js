@@ -48,25 +48,15 @@ var quiz_data = {
     },
     "waypoint_ee": { // Hausnummer Blumenladen
         "password" : "42",
-        "password_hash": "", // TODO
+        "password_hash": "GeZu5w==",
         "quiz_title" : "Auf der Spur des Lichtes",
         "intro": "Viele Blumen wohnen in einem Haus in der Nähe einer viel befahrenen Straße.",
         "text": "Die Antwort ist die dezimale Zahl der hexadezimalen Hausnummer.",
-        "image": "empty.png",
         "next" : "waypoint_g" // Schachtdeckel hatten wir schon
-    },
-    "waypoint_f": { // 65
-        "password" : "",
-        "password_hash": "",
-        "quiz_title" : "",
-        "intro": "",
-        "text": "",
-        "image": "empty.png",
-        "next" : ""
     },
     "waypoint_g": { // 66
         "password" : "2",
-        "password_hash": "muQ=", // TODO
+        "password_hash": "muQ=",
         "quiz_title" : "Wo sich Fußgänger wohlfühlen",
         "intro": "Auf das größte Shopping-Center weist eine Tafel aus purem Marmor hin.",
         "text": "Komischerweise wurde der Tag in binärer Darstellung verewiglicht. Wie lautet der Tag?",
@@ -98,7 +88,7 @@ var quiz_data = {
     },
     "waypoint_jj": { // 70 - ein anderes
         "password" : "sepulkral",
-        "password_hash": "", // TODO
+        "password_hash": "C86ycC8nPItMvuskqlUurtu3",
         "quiz_title" : "Dem Himmel entgegen",
         "intro": "Hinter der Kirche steht ein Wegweiser, der auf ein Museum hindeutet.",
         "text": "Was ist der Vorname des Museums?",
@@ -106,7 +96,7 @@ var quiz_data = {
     },
     "waypoint_k": { // 73
         "password" : "weiheranlage",
-        "password_hash": "", // TODO
+        "password_hash": "L7y0Q/hiSVEeVqT5U+xdwREhzxSagwuc",
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "Dein nächstes Ziel ist die zweite (? TODO) ausgeschilderte Sehenswürdigkeit. Doch trete noch nicht durch die Pforte sondern erstarre voller Ehrfurcht vor dem städtischen Hinweisschild.",
         "text": "Vier grüne Dinge dürfen nicht betreten werden. Welches wird als vorletztes genannt?",
@@ -114,7 +104,7 @@ var quiz_data = {
     },
     "waypoint_l": { // 75
         "password" : "pfau",
-        "password_hash": "", // TODO
+        "password_hash": "x3d1xDNyR8k=",
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "Folge nun dem Pfad nach Osten. An der ersten Gabelung steht ein Tier und betrachtet dich.",
         "text": "Um welches Tier handelt es sich? ",
@@ -122,7 +112,7 @@ var quiz_data = {
     },
     "waypoint_m": { // 76
         "password" : "19222",
-        "password_hash": "", // TODO
+        "password_hash": "lfoaENv8nCwTpw==",
         "quiz_title" : "Im Naherhohlungszentrum der Stadt",
         "intro": "Nun kommen die Kleinen auf ihre Kosten. Ein freundlicher Mensch erklärt in noch freundlicheren Lettern die Spielregeln.",
         "text": "Wie lautet die Telefonnummer des freundlichen Eskort-Services?",
@@ -153,4 +143,3 @@ var quiz_data = {
         "next" : ""
     }
 }
-
