@@ -8,6 +8,7 @@ var http = require("http"),
 const SERVE_DIR = "app_files/";
 const NUM_PLAYERS = 11;
 const SPECIAL_FILE = "/final.js";
+const LOCATIONS = {"riddle":{}, "wandern":{}};
 
 var Transcoder = require("./engine_node.js");
 
@@ -42,7 +43,7 @@ var merge_solution = function(body) {
 	submitted_solutions[location][username] = solution;
 	var submitted_solutions_str = JSON.stringify(submitted_solutions)
 	logn.info("User", username, "just submitted solutions for", location+".");
-//	logn.info(submitted_solutions_str);
+	logn.info(submitted_solutions_str);
 	fs.writeFile("submitted_solutions.json", submitted_solutions_str);
 }
 
@@ -59,7 +60,7 @@ var evaluate_solutions = function() {
 				logn.debug("sourcing:", filename);
 				var file_source = file.toString("utf8");
 				eval(file_source);
-				quiz_data_call(location, quiz_data);
+				quiz_data_call(location, quiz_data);  // TODO wieder einsammeln der Ergebnisse der loci
 			};
 			fs.readFile(filename, local_callback);
 		})(locus);
@@ -84,14 +85,20 @@ var quiz_data_call = function(location, quiz_data) {
 		var percentage = 100*user_points/cardinality;
 		logn.info("In \""+location+"\" the user "+username+" has "+user_points+"/"+cardinality+" or "+percentage+"%.");
 		if (!results[location]) { results[location] = {}; };
-		if (!results[location][username]) { results[location][username] = {}; };
-		results[location][username].percentage = percentage;
+		if (!results[location].statistics) { results[location].statistics = {}; };
+		if (!results[location].users) { results[location].users = {}; };
+		if (!results[location].users[username]) { results[location].users[username] = {}; };
+		results[location].users[username].percentage = percentage;
 		sum_strength += percentage;
+		results[location].statistics.sum_strength = sum_strength;
 	}
-	logn.info("Results for "+location+": "+JSON.stringify(results[location]));
+
 	var accumulated_success = sum_strength/NUM_PLAYERS/100;
-	logn.info("Accumulated success="+accumulated_success);
-	logn.info("Saturated accumulated success="+Math.tanh(2*accumulated_success));
+	results[location].statistics.accumulated_success = accumulated_success;
+//	logn.info("Results for "+location+": "+JSON.stringify(results[location]));
+	logn.info("Results for "+location+":",results[location]);
+	logn.info("Accumulated success for <"+location+"> ="+accumulated_success);
+	logn.info("Saturated accumulated success for <"+location+"> ="+Math.tanh(2*accumulated_success));
 };
 
 var generate_special_file = function() {
