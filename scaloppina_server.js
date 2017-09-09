@@ -7,7 +7,7 @@ var http = require("http"),
 	port = process.argv[2] || 8888;
 
 const SERVE_DIR = "app_files/";
-const NUM_PLAYERS = 1;
+const NUM_PLAYERS = 10;
 const SPECIAL_FILE = "/final.js";
 const TANH_SCALE = 2;
 
