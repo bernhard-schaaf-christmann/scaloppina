@@ -6,11 +6,17 @@ var http = require("http"),
 	port = process.argv[2] || 8888;
 
 const SERVE_DIR = "app_files/";
-const NUM_PLAYERS = 11;
+const NUM_PLAYERS = 1;
 const SPECIAL_FILE = "/final.js";
-const LOCATIONS = {"riddle":{}, "wandern":{}};
+const TANH_SCALE = 2;
+
+/// generator function for the used locations
+var get_locations = function() {
+	return {"riddle":{}, "wandern":{}};
+}
 
 var Transcoder = require("./engine_node.js");
+var final_riddle_data = require("./final_riddle.js");
 
 var logn = {
 	info : function() {
@@ -23,7 +29,7 @@ var logn = {
 
 var transcoder = new Transcoder();
 
-var submitted_solutions = {};
+var global_submitted_solutions = {};
 var location_cardinality = 0;
 var results = {};
 
@@ -39,17 +45,24 @@ var merge_solution = function(body) {
 	var location = location_result[1];
 //	logn.info("location",location);
 	if (!location) { return; }
-	if (!submitted_solutions[location]) { submitted_solutions[location] = {}; }
-	submitted_solutions[location][username] = solution;
-	var submitted_solutions_str = JSON.stringify(submitted_solutions)
+	if (!global_submitted_solutions[location]) { global_submitted_solutions[location] = {}; }
+	global_submitted_solutions[location][username] = solution;
+	var global_submitted_solutions_str = JSON.stringify(global_submitted_solutions)
 	logn.info("User", username, "just submitted solutions for", location+".");
-	logn.info(submitted_solutions_str);
-	fs.writeFile("submitted_solutions.json", submitted_solutions_str);
+	logn.debug(global_submitted_solutions_str);
+	fs.writeFile("submitted_solutions.json", global_submitted_solutions_str);
 }
 
 var evaluate_solutions = function() {
-	location_cardinality = Object.keys(submitted_solutions).length;
-	for (var locus in submitted_solutions) {
+	location_cardinality = Object.keys(global_submitted_solutions).length;
+	var local_submitted_solutions = JSON.parse(JSON.stringify(global_submitted_solutions)); // kind of deep copy
+	var join_callbacks = {
+		results : get_locations(),
+		submitted_solutions : local_submitted_solutions,
+		trigger :location_cardinality,
+		callback : when_all_locations_evaluated
+	};
+	for (var locus in local_submitted_solutions) {
 //		logn.info(locus);
 		(function(location) {
 			var filename = SERVE_DIR+location+"_data.js";
@@ -60,21 +73,21 @@ var evaluate_solutions = function() {
 				logn.debug("sourcing:", filename);
 				var file_source = file.toString("utf8");
 				eval(file_source);
-				quiz_data_call(location, quiz_data);  // TODO wieder einsammeln der Ergebnisse der loci
+				quiz_data_call(location, quiz_data, join_callbacks);  // TODO wieder einsammeln der Ergebnisse der loci
 			};
 			fs.readFile(filename, local_callback);
 		})(locus);
 	}
 }
 
-var quiz_data_call = function(location, quiz_data) {
+var quiz_data_call = function(location, quiz_data, join_callbacks) {
 	var cardinality = Object.keys(quiz_data).length-1;
 	var sum_strength = 0;
 	logn.debug(location, "=", quiz_data, "cardinality", cardinality);
-	for (var username in submitted_solutions[location]) {
+	for (var username in join_callbacks.submitted_solutions[location]) {
 		var user_points = 0;
-		for (var stage in submitted_solutions[location][username].solutions) {
-			var submitted_password = submitted_solutions[location][username].solutions[stage];
+		for (var stage in join_callbacks.submitted_solutions[location][username].solutions) {
+			var submitted_password = join_callbacks.submitted_solutions[location][username].solutions[stage];
 			var submitted_password_hash = transcoder.encode(submitted_password);
 			var needed_password_hash = quiz_data[stage].password_hash;
 			logn.debug("checking answer: <"+submitted_password+"> hash <"+submitted_password_hash+"> needed <"+needed_password_hash+">");
@@ -97,9 +110,42 @@ var quiz_data_call = function(location, quiz_data) {
 	results[location].statistics.accumulated_success = accumulated_success;
 //	logn.info("Results for "+location+": "+JSON.stringify(results[location]));
 	logn.info("Results for "+location+":",results[location]);
-	logn.info("Accumulated success for <"+location+"> ="+accumulated_success);
-	logn.info("Saturated accumulated success for <"+location+"> ="+Math.tanh(2*accumulated_success));
+	logn.info("Accumulated success for <"+location+"> = "+accumulated_success);
+	logn.info("Saturated accumulated success for <"+location+"> = "+Math.tanh(TANH_SCALE*accumulated_success));
+	join_callbacks.results[location] = results[location];
+	join_callbacks.trigger -= 1;
+	if (0 == join_callbacks.trigger) {
+		join_callbacks.callback();
+	}
 };
+
+var when_all_locations_evaluated = function() {
+	logn.info("all_locations_evaluated");
+	logn.info(this.submitted_solutions);
+	logn.info("following results");
+	logn.info(this.results);
+	var all_accumulated_success = 0;
+	for (var locus in this.results) {
+		if (this.results[locus].statistics) {
+			all_accumulated_success += this.results[locus].statistics.accumulated_success;
+		}
+	}
+	var locations = get_locations();
+	var num_locations = Object.keys(locations).length;
+	var all_saturated_accumulated_success = Math.tanh(TANH_SCALE*all_accumulated_success/num_locations);
+	var final_riddle_length = final_riddle_data.text.length;
+	var total_score = Math.round(final_riddle_length*all_saturated_accumulated_success);
+	var total_score_possible = final_riddle_length;
+	var result_text = "Alle Spieler haben eine Gesamtpunktzahl "+total_score+" von "+total_score_possible+" möglichen Punkten erspielt."
+
+	logn.info("Accumulated success for ALL = "+all_accumulated_success);
+	logn.info("Saturated accumulated success for ALL = "+all_saturated_accumulated_success);
+
+	logn.info("all_following results");
+
+	logn.info(result_text);
+	final_display_data.statistics = result_text;
+}
 
 var generate_special_file = function() {
 	return "var final_display_data = "+JSON.stringify(final_display_data);
@@ -116,13 +162,15 @@ http.createServer(function(request, response) {
 		request.on('data', function (data) { body += data; });
         request.on('end', function () {
 //            console.log("POSTed: " + body.length);
-			merge_solution(body);
-			evaluate_solutions();
+			merge_solution(body); // is synchronous
+			evaluate_solutions(); // is asynchronous
         });
         response.writeHead(200, {'Content-Type': 'text/html'});
         response.end('post received');
 		return;
 	}
+
+	var user_agent = request.headers["user-agent"];
 
 	var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), SERVE_DIR, uri);
 
@@ -132,7 +180,7 @@ http.createServer(function(request, response) {
 		response.writeHead(200);
 		response.write(special_file);
 		response.end();
-		logn.info("generated: ", filename);
+		logn.info('generated: "'+filename+'" for "'+user_agent+'"');
 		return;
 	}
 
@@ -157,11 +205,12 @@ http.createServer(function(request, response) {
 			response.writeHead(200);
 			response.write(file, "binary");
 			response.end();
-			logn.info("delivered: ", filename);
+			logn.info('delivered: "'+filename+'" to "'+user_agent+'"');
 		});
 	});
 }).listen(parseInt(port, 10));
 
+console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
 
 
