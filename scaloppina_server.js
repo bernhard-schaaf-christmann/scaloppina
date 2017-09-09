@@ -3,6 +3,7 @@ var http = require("http"),
 	url = require("url"),
 	path = require("path"),
 	fs = require("fs"),
+	Random = require("random-js"),
 	port = process.argv[2] || 8888;
 
 const SERVE_DIR = "app_files/";
@@ -34,8 +35,15 @@ var location_cardinality = 0;
 var results = {};
 
 var final_display_data = {
-	"text" : final_riddle_data.alt_,
+	"text" : final_riddle_data.alt_.slice(),
 	"statistics" : "Server: Es wurden noch keine Lösungen eingereicht."
+}
+
+// my polyfill for Array.prototype.includes
+if (!Array.prototype.includes) {
+	Array.prototype.includes = function(arg) {
+		return -1 != Array.prototype.indexOf.call(this, arg);
+	}
 }
 
 var merge_solution = function(body) {
@@ -138,13 +146,53 @@ var when_all_locations_evaluated = function() {
 	var total_score_possible = final_riddle_length;
 	var result_text = "Alle Spieler haben eine Gesamtpunktzahl "+total_score+" von "+total_score_possible+" möglichen Punkten erspielt."
 
+	var alt__text = final_riddle_data.alt_.slice();
+	var true_text = final_riddle_data.text.slice();
+	var riddle_text = "";
+
+
+	var mt = Random.engines.mt19937()
+	mt.seed(0xACE1);
+	var permutation = [];
+	var random_next = function(maxn) {
+		if (maxn <= permutation.length) {
+			return; // Logic Error; we have all combinations
+		}
+		do {
+			var n = (mt()&0x7FFFFFFF)%maxn;
+		} while (permutation.includes(n));
+		permutation.push(n);
+		return n;
+	}
+//	total_score = 560;
+	var i = 0;
+	while ((total_score > i) && (total_score_possible > i)) {
+		var n = random_next(total_score_possible);
+		console.log("DEBUG");
+		riddle_text[i] = "."; // exchanging characters by permutation
+//		riddle_text[n] = true_text[n]; // exchanging characters by permutation
+		i++;
+	}
+
+	for (var i = 0; i < true_text.length; i++) {
+		if (permutation.includes(i)) {
+			riddle_text = riddle_text+true_text[i];
+		} else {
+			riddle_text = riddle_text+alt__text[i];
+		}
+	}
+
+	final_display_data.text = riddle_text;
+	final_display_data.statistics = result_text;
+
 	logn.info("Accumulated success for ALL = "+all_accumulated_success);
 	logn.info("Saturated accumulated success for ALL = "+all_saturated_accumulated_success);
 
 	logn.info("all_following results");
 
+	logn.info(riddle_text);
 	logn.info(result_text);
-	final_display_data.statistics = result_text;
+	logn.info(final_display_data);
 }
 
 var generate_special_file = function() {
@@ -176,7 +224,7 @@ http.createServer(function(request, response) {
 
 	if (SPECIAL_FILE == uri) {
 		special_file = generate_special_file()
-		logn.info(generate_special_file());
+		logn.debug(special_file);
 		response.writeHead(200);
 		response.write(special_file);
 		response.end();
