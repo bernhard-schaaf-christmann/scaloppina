@@ -7,6 +7,7 @@ var http = require("http"),
 
 const SERVE_DIR = "app_files/";
 const NUM_PLAYERS = 11;
+const SPECIAL_FILE = "/final.js";
 
 var Transcoder = require("./engine_node.js");
 
@@ -24,6 +25,11 @@ var transcoder = new Transcoder();
 var submitted_solutions = {};
 var location_cardinality = 0;
 var results = {};
+
+var final_display_data = {
+	"text" : "Server: ABCDEFGHIJKLMNOPQRSTUVWXYZ…",
+	"statistics" : "Server: Es wurden noch keine Lösungen eingereicht."
+}
 
 var merge_solution = function(body) {
 	var solution = JSON.parse(body);
@@ -88,6 +94,10 @@ var quiz_data_call = function(location, quiz_data) {
 	logn.info("Saturated accumulated success="+Math.tanh(2*accumulated_success));
 };
 
+var generate_special_file = function() {
+	return "var final_display_data = "+JSON.stringify(final_display_data);
+}
+
 http.createServer(function(request, response) {
 
 	var method = request.method;
@@ -109,12 +119,22 @@ http.createServer(function(request, response) {
 
 	var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), SERVE_DIR, uri);
 
+	if (SPECIAL_FILE == uri) {
+		special_file = generate_special_file()
+		logn.info(generate_special_file());
+		response.writeHead(200);
+		response.write(special_file);
+		response.end();
+		logn.info("generated: ", filename);
+		return;
+	}
+
 	fs.exists(filename, function(exists) {
 		if(!exists) {
-		  response.writeHead(404, {"Content-Type": "text/plain"});
-		  response.write("404 Not Found\n");
-		  response.end();
-		  return;
+			response.writeHead(404, {"Content-Type": "text/plain"});
+			response.write("404 Not Found\n");
+			response.end();
+			return;
 		}
 
 		if (fs.statSync(filename).isDirectory()) filename += '/index.html';
