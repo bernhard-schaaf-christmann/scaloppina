@@ -63,6 +63,13 @@ img.image_fixed_width {
     font-size: 95%;
 }
 
+.final_main_content_text {
+	word-break: break-all;
+    width: 100%;
+    float: left;
+    font-size: 95%;
+}
+
 .main_content_user_input {
     width: 100%;
     float: left;

@@ -34,7 +34,7 @@ var location_cardinality = 0;
 var results = {};
 
 var final_display_data = {
-	"text" : "Server: ABCDEFGHIJKLMNOPQRSTUVWXYZ…",
+	"text" : final_riddle_data.alt_,
 	"statistics" : "Server: Es wurden noch keine Lösungen eingereicht."
 }
 
